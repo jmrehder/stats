@@ -289,6 +289,21 @@ def advanced_analyses():
     # t-Test
     if analysis_type == "t-Test":
         st.subheader("t-Test (unabhängige Stichproben)")
+        if st.button("Erklärung zum t-Test"):
+            st.info("""
+            **t-Test für unabhängige Stichproben**
+
+            Der t-Test wird verwendet, um festzustellen, ob sich die Mittelwerte zweier Gruppen signifikant unterscheiden.
+            **Anwendungsbeispiele:**
+            - Vergleich des durchschnittlichen Gewichts von Männern und Frauen.
+            - Vergleich von Testergebnissen zwischen zwei verschiedenen Schulklassen.
+
+            **Voraussetzungen:**
+            1. **Unabhängigkeit der Gruppen**: Die Messungen in einer Gruppe dürfen nicht von der anderen Gruppe beeinflusst werden.
+            2. **Normalverteilung**: Die Zielvariable sollte in beiden Gruppen annähernd normalverteilt sein.
+            3. **Varianzhomogenität**: Die Varianzen der beiden Gruppen sollten ähnlich sein. Falls nicht, kann ein angepasster t-Test (Welch-Test) verwendet werden.
+            """)
+
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
         categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
         if not numeric_columns or not categorical_columns:
@@ -312,19 +327,35 @@ def advanced_analyses():
 
     # Korrelationsanalyse
     elif analysis_type == "Korrelation":
-        st.subheader("Korrelationsanalyse")
+        st.subheader("Korrelationsanalyse (Pearson)")
+        if st.button("Erklärung zur Korrelationsanalyse"):
+            st.info("""
+            **Pearson-Korrelation**
+
+            Die Pearson-Korrelation misst die Stärke und Richtung eines linearen Zusammenhangs zwischen zwei numerischen Variablen.
+
+            **Anwendungsbeispiele:**
+            - Zusammenhang zwischen Körpergröße und Gewicht.
+            - Zusammenhang zwischen Lernzeit und Testergebnis.
+
+            **Interpretation des Korrelationskoeffizienten (r):**
+            - **r = 1**: Perfekte positive Korrelation (wenn eine Variable steigt, steigt die andere proportional).
+            - **r = -1**: Perfekte negative Korrelation (wenn eine Variable steigt, sinkt die andere proportional).
+            - **r = 0**: Kein linearer Zusammenhang zwischen den Variablen.
+
+            **Voraussetzungen:**
+            1. **Linearität**: Es sollte ein linearer Zusammenhang zwischen den Variablen bestehen.
+            2. **Normalverteilung**: Beide Variablen sollten annähernd normalverteilt sein.
+            """)
+
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
         if len(numeric_columns) < 2:
             st.warning("Für eine Korrelationsanalyse benötigen Sie mindestens zwei numerische Spalten.")
             return
         col_x = st.selectbox("Wählen Sie die erste Variable (X)", numeric_columns)
         col_y = st.selectbox("Wählen Sie die zweite Variable (Y)", [col for col in numeric_columns if col != col_x])
-        method = st.radio("Korrelationstyp", ["Pearson", "Spearman"])
-        if method == "Pearson":
-            corr, p_value = stats.pearsonr(df[col_x], df[col_y])
-        else:
-            corr, p_value = stats.spearmanr(df[col_x], df[col_y])
-        st.write(f"Korrelationskoeffizient ({method}): {corr:.4f}")
+        corr, p_value = stats.pearsonr(df[col_x], df[col_y])
+        st.write(f"Korrelationskoeffizient (Pearson): {corr:.4f}")
         st.write(f"p-Wert: {p_value:.4e}")
         if p_value < 0.05:
             st.success("Die Korrelation ist statistisch signifikant (p < 0.05).")
@@ -334,6 +365,25 @@ def advanced_analyses():
     # Chi²-Test
     elif analysis_type == "Chi²-Test":
         st.subheader("Chi²-Test für Unabhängigkeit")
+        if st.button("Erklärung zum Chi²-Test"):
+            st.info("""
+            **Chi²-Test für Unabhängigkeit**
+
+            Der Chi²-Test prüft, ob ein Zusammenhang zwischen zwei kategorialen Variablen besteht.
+
+            **Anwendungsbeispiele:**
+            - Besteht ein Zusammenhang zwischen Geschlecht und Berufswahl?
+            - Gibt es eine Abhängigkeit zwischen Rauchen (ja/nein) und Auftreten von Krankheiten (ja/nein)?
+
+            **Voraussetzungen:**
+            1. Die Daten müssen in einer Kreuztabelle zusammengefasst sein.
+            2. Erwartete Häufigkeiten in jeder Zelle der Kreuztabelle sollten mindestens 5 betragen.
+
+            **Interpretation:**
+            - Ein niedriger p-Wert (p < 0.05) deutet darauf hin, dass ein Zusammenhang zwischen den Variablen besteht.
+            - Ein hoher p-Wert (p ≥ 0.05) deutet darauf hin, dass die Variablen unabhängig sind.
+            """)
+
         categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
         if len(categorical_columns) < 2:
             st.warning("Für einen Chi²-Test benötigen Sie mindestens zwei kategoriale Spalten.")
@@ -352,30 +402,87 @@ def advanced_analyses():
     # Regression
     elif analysis_type == "Regression":
         st.subheader("Lineare Regression (OLS)")
-        numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
-        if not numeric_columns:
-            st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
+    if st.button("Erklärung zur Regression"):
+        st.info("""
+        **Lineare Regression**
+
+        Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren
+        unabhängigen Variablen (X), um Vorhersagen zu treffen oder die Beziehung zu verstehen.
+
+        **Anwendungsbeispiele:**
+        - Vorhersage des Einkommens basierend auf Bildungsjahren.
+        - Zusammenhang zwischen Werbebudget und Verkaufszahlen.
+
+        **Voraussetzungen:**
+        1. **Linearität**: Der Zusammenhang zwischen den unabhängigen Variablen und der Zielvariablen sollte linear sein.
+        2. **Homoskedastizität**: Die Streuung der Residuen (Fehler) sollte über den Wertebereich konstant sein.
+        3. **Normalverteilung der Residuen**: Die Fehler sollten annähernd normalverteilt sein.
+        4. **Unabhängigkeit der Beobachtungen**: Es sollte keine Autokorrelation zwischen den Fehlern bestehen.
+        """)
+
+    numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+    if not numeric_columns:
+        st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
+        return
+    target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
+    features_possible = [col for col in numeric_columns if col != target_col]
+    selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
+    if st.button("Trainiere Regressionsmodell"):
+        if not selected_features:
+            st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
             return
-        target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
-        features_possible = [col for col in numeric_columns if col != target_col]
-        selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
-        if st.button("Trainiere Regressionsmodell"):
-            if not selected_features:
-                st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
-                return
-            X = df[selected_features]
-            y = df[target_col]
-            data = pd.concat([X, y], axis=1).dropna()
-            X = data[selected_features]
-            y = data[target_col]
-            X_const = sm.add_constant(X)
-            model = sm.OLS(y, X_const).fit()
-            st.write("**Regressionszusammenfassung**")
-            st.text(model.summary())
-            st.session_state["regression_model"] = model
-            st.session_state["regression_features"] = selected_features
-            st.session_state["regression_target"] = target_col
-            st.session_state["regression_X_const"] = X_const
+        X = df[selected_features]
+        y = df[target_col]
+        data = pd.concat([X, y], axis=1).dropna()
+        X = data[selected_features]
+        y = data[target_col]
+        X_const = sm.add_constant(X)
+        model = sm.OLS(y, X_const).fit()
+        st.write("**Regressionszusammenfassung**")
+        st.text(model.summary())
+        st.session_state["regression_model"] = model
+        st.session_state["regression_features"] = selected_features
+        st.session_state["regression_target"] = target_col
+        st.session_state["regression_X_const"] = X_const
+        
+        # Regressionslinie plotten
+        if len(selected_features) == 1:
+            feature = selected_features[0]
+            fig, ax = plt.subplots()
+            ax.scatter(data[feature], y, alpha=0.5, label="Datenpunkte")
+            x_range = np.linspace(data[feature].min(), data[feature].max(), 100)
+            x_range_df = pd.DataFrame({feature: x_range})
+            x_range_df_const = sm.add_constant(x_range_df)
+            y_pred_line = model.predict(x_range_df_const)
+            ax.plot(x_range, y_pred_line, color="red", label="Regressionslinie")
+            ax.set_xlabel(feature)
+            ax.set_ylabel(target_col)
+            ax.legend()
+            st.pyplot(fig)
+            st.info("""
+            **Interpretation der Regressionslinie:**
+            Die rote Linie zeigt, wie die Zielvariable (Y) mit der unabhängigen Variablen (X) zusammenhängt.
+            Ein steilerer Anstieg deutet auf eine stärkere Beziehung hin.
+            """)
+
+        # Homoskedastizität prüfen
+        st.subheader("Homoskedastizität (Residualanalyse)")
+        data["Vorhersage"] = model.predict(X_const)
+        data["Residuals"] = y - data["Vorhersage"]
+        fig_residuals, ax_residuals = plt.subplots()
+        ax_residuals.scatter(data["Vorhersage"], data["Residuals"], alpha=0.5)
+        ax_residuals.axhline(0, color="red", linestyle="--")
+        ax_residuals.set_xlabel("Vorhersagewerte")
+        ax_residuals.set_ylabel("Residuen")
+        ax_residuals.set_title("Residualplot: Vorhersagen vs. Residuen")
+        st.pyplot(fig_residuals)
+        st.info("""
+        **Interpretation des Residualplots:**
+        - Eine zufällige Streuung der Residuen (ohne erkennbares Muster) deutet auf Homoskedastizität hin.
+        - Falls ein Muster (z.B. Trichterform) erkennbar ist, könnte dies auf Heteroskedastizität hinweisen.
+        Heteroskedastizität bedeutet, dass das Modell in bestimmten Bereichen weniger zuverlässig ist.
+        """)
+
 
 #########################################
 # Funktion: Vorhersagen                 #
@@ -390,10 +497,12 @@ def vorhersagen():
     if "regression_model" not in st.session_state:
         st.warning("Bitte trainieren Sie zuerst ein Regressionsmodell unter 'Statistische Analysen'.")
         return
+
     model = st.session_state["regression_model"]
     features = st.session_state["regression_features"]
     target_col = st.session_state["regression_target"]
     df = st.session_state["df"]
+    
     input_data = {}
     for feature in features:
         col_min = float(df[feature].min())
@@ -405,36 +514,23 @@ def vorhersagen():
             min_value=col_min,
             max_value=col_max
         )
+    
     input_df = pd.DataFrame([input_data])
-    input_df_const = sm.add_constant(input_df)
+    
+    # Sicherstellen, dass der konstante Term korrekt hinzugefügt wird
+    input_df_const = sm.add_constant(input_df, has_constant='add')
+    
+    # Überprüfen, ob die Spalten übereinstimmen
+    missing_cols = set(model.model.exog_names) - set(input_df_const.columns)
+    for col in missing_cols:
+        input_df_const[col] = 0  # Fehlende Spalten mit 0 auffüllen
+    
+    # Reihenfolge der Spalten anpassen
+    input_df_const = input_df_const[model.model.exog_names]
+    
     prediction = model.predict(input_df_const)
     st.write(f"Vorhergesagter Wert für {target_col}: {prediction[0]:.4f}")
 
-#########################################
-# Funktion: PDF Bericht                 #
-#########################################
-def pdf_bericht():
-    st.header("PDF Bericht")
-    if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
-        return
-    df = st.session_state["df"]
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(0, 10, "Statistischer Bericht", ln=True)
-    pdf.cell(0, 10, f"Datensatzform: {df.shape}", ln=True)
-    pdf.ln(10)
-    pdf.multi_cell(0, 10, df.describe().to_string())
-    buffer = BytesIO()
-    pdf.output(buffer)
-    buffer.seek(0)
-    st.download_button(
-        label="PDF herunterladen",
-        data=buffer,
-        file_name="bericht.pdf",
-        mime="application/pdf"
-    )
 
 #########################################
 # Hauptblock                            #
