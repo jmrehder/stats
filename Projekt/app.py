@@ -15,7 +15,7 @@ import statsmodels.api as sm
 # Hauptfunktion & Sidebar (7 Optionen)  #
 #########################################
 def main():
-    st.title("Statistische Analysen mit Streamlit")
+    st.title("Statistische Analysen von Diana und Jörg")
     
     st.sidebar.title("Navigation")
     app_mode = st.sidebar.selectbox(
