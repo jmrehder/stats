@@ -9,8 +9,7 @@ import scipy.stats as stats
 import statsmodels.api as sm
 
 # Für den PDF-Bericht
-from fpdf import FPDF
-from io import BytesIO
+
 
 #########################################
 # Hauptfunktion & Sidebar (7 Optionen)  #
