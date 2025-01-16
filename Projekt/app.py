@@ -606,42 +606,67 @@ def vorhersagen():
         In diesem Bereich können Sie mit dem zuvor trainierten Regressionsmodell Vorhersagen für die Zielvariable treffen.
         """
     )
+
+    # Überprüfen, ob das Regressionsmodell verfügbar ist
     if "regression_model" not in st.session_state:
         st.warning("Bitte trainieren Sie zuerst ein Regressionsmodell unter 'Statistische Analysen'.")
         return
 
+    # Laden des Modells und der relevanten Metadaten aus dem Session State
     model = st.session_state["regression_model"]
     features = st.session_state["regression_features"]
     target_col = st.session_state["regression_target"]
     df = st.session_state["df"]
-    
+
+    # Erstellung der Eingabemaske für die Vorhersagedaten
     input_data = {}
     for feature in features:
-        col_min = float(df[feature].min())
-        col_max = float(df[feature].max())
-        default_val = float(df[feature].mean())
+        col_min = float(df[feature].min())  # Minimum des Features
+        col_max = float(df[feature].max())  # Maximum des Features
+        default_val = float(df[feature].mean())  # Standardwert (Mittelwert)
+        
         input_data[feature] = st.number_input(
             f"Wert für {feature} (Bereich: {col_min} bis {col_max})",
             value=default_val,
             min_value=col_min,
             max_value=col_max
         )
-    
+
+    # Eingabedaten als DataFrame erstellen
     input_df = pd.DataFrame([input_data])
-    
+    st.write("Eingegebene Daten:", input_df)
+
     # Sicherstellen, dass der konstante Term korrekt hinzugefügt wird
     input_df_const = sm.add_constant(input_df, has_constant='add')
-    
-    # Überprüfen, ob die Spalten übereinstimmen
+
+    # Überprüfen auf fehlende Spalten und deren Behandlung
     missing_cols = set(model.model.exog_names) - set(input_df_const.columns)
-    for col in missing_cols:
-        input_df_const[col] = 0  # Fehlende Spalten mit 0 auffüllen
-    
-    # Reihenfolge der Spalten anpassen
-    input_df_const = input_df_const[model.model.exog_names]
-    
-    prediction = model.predict(input_df_const)
-    st.write(f"Vorhergesagter Wert für {target_col}: {prediction[0]:.4f}")
+    if missing_cols:
+        st.warning(f"Fehlende Spalten in den Eingabedaten: {missing_cols}. Diese werden mit 0 aufgefüllt.")
+        for col in missing_cols:
+            input_df_const[col] = 0  # Fehlende Spalten mit 0 initialisieren
+
+    # Reihenfolge der Spalten sicherstellen
+    try:
+        input_df_const = input_df_const[model.model.exog_names]
+    except KeyError as e:
+        st.error(f"Fehler beim Abgleich der Spaltenreihenfolge: {e}")
+        st.stop()
+
+    # Vorhersage durchführen
+    try:
+        prediction = model.predict(input_df_const)
+        st.success(f"Vorhergesagter Wert für {target_col}: {prediction[0]:.4f}")
+    except Exception as e:
+        st.error(f"Fehler bei der Berechnung der Vorhersage: {e}")
+
+    # Debugging-Informationen anzeigen
+    st.subheader("Debugging-Informationen")
+    st.write("Modell: ", model)
+    st.write("Features: ", features)
+    st.write("Eingabedaten (nach Anpassung):", input_df_const)
+    st.write("Modell-Spalten (exog_names):", model.model.exog_names)
+
 
 ######################################################################################
 def pdf_bericht():
