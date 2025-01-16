@@ -290,14 +290,14 @@ def descriptive_statistics():
 
     st.subheader("Korrelationsmatrix")
     if numeric_columns:
-    corr = df.corr(numeric_only=True)
-    fig_corr, ax_corr = plt.subplots(figsize=(6, 4))
+        corr = df.corr(numeric_only=True)
+        fig_corr, ax_corr = plt.subplots(figsize=(6, 4))
     # Kürze die Spaltennamen auf maximal 10 Zeichen
-    short_labels = [col[:10] for col in corr.columns]
+        short_labels = [col[:10] for col in corr.columns]
     # Erstelle die Heatmap mit gekürzten Labels
-    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr, xticklabels=short_labels, yticklabels=short_labels)
-    ax_corr.set_title("Korrelationsmatrix (gekürzte Labels)")
-    st.pyplot(fig_corr)
+        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr, xticklabels=short_labels, yticklabels=short_labels)
+        ax_corr.set_title("Korrelationsmatrix (gekürzte Labels)")
+        st.pyplot(fig_corr)
 else:
     st.warning("Keine numerischen Spalten für Korrelationsmatrix gefunden.")
 
