@@ -293,7 +293,7 @@ def descriptive_statistics():
     if numeric_columns:
         corr = df.corr(numeric_only=True)
         fig_corr, ax_corr = plt.subplots(figsize=(6, 4))
-        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr)
+        sns.heatmap(corr, annot=False, cmap="coolwarm", ax=ax_corr)
         ax_corr.set_title("Korrelationsmatrix")
         st.pyplot(fig_corr)
     else:
