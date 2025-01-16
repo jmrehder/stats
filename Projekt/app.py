@@ -20,7 +20,7 @@ def main():
     
     st.sidebar.title("Navigation")
     app_mode = st.sidebar.selectbox(
-        "Wähle eine Ansicht",
+        "Wählen Sie eine Ansicht",
         [
             "Startseite",
             "Seaborn-Datensatz laden",
@@ -172,8 +172,8 @@ def load_data(file, file_type):
 
 
 def file_uploader():
-    st.header("Lade einen Datensatz hoch")
-    uploaded_file = st.file_uploader("Wähle eine CSV- oder Excel-Datei aus", type=["csv", "xlsx", "xls"])
+    st.header("Laden Sie einen Datensatz hoch")
+    uploaded_file = st.file_uploader("Wählen Sie eine CSV- oder Excel-Datei aus", type=["csv", "xlsx", "xls"])
     if uploaded_file is not None:
         if uploaded_file.name.lower().endswith(".csv"):
             file_type = "csv"
@@ -182,7 +182,7 @@ def file_uploader():
         df = load_data(uploaded_file, file_type)
         if isinstance(df, dict):
             sheet_names = list(df.keys())
-            selected_sheet = st.selectbox("Wähle ein Arbeitsblatt", sheet_names)
+            selected_sheet = st.selectbox("Wählen Sie ein Arbeitsblatt", sheet_names)
             df = df[selected_sheet]
         st.session_state["df"] = df
         st.success("Datei erfolgreich hochgeladen!")
@@ -196,7 +196,7 @@ def file_uploader():
 def data_exploration():
     st.header("Erste Daten-Exploration")
     if "df" not in st.session_state:
-        st.warning("Bitte lade zuerst einen Datensatz hoch.")
+        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
     
@@ -229,7 +229,7 @@ def data_exploration():
 def datenbereinigung():
     st.header("Datenbereinigung: Fehlende Werte entfernen")
     if "df" not in st.session_state:
-        st.warning("Bitte lade zuerst einen Datensatz hoch.")
+        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
     st.write("Originale Anzahl der Zeilen:", df.shape[0])
@@ -258,7 +258,7 @@ def datenbereinigung():
 def descriptive_statistics():
     st.header("Deskriptive Statistik")
     if "df" not in st.session_state:
-        st.warning("Bitte lade zuerst einen Datensatz hoch.")
+        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
 
@@ -281,7 +281,7 @@ def descriptive_statistics():
     st.subheader("Histogramme")
     numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
     if numeric_columns:
-        column_to_plot = st.selectbox("Wähle eine Spalte für das Histogramm", numeric_columns, key="histogram")
+        column_to_plot = st.selectbox("Wählen Sie eine Spalte für das Histogramm", numeric_columns, key="histogram")
         fig, ax = plt.subplots()
         sns.histplot(df[column_to_plot], kde=True, ax=ax)
         ax.set_title(f"Histogram von {column_to_plot}")
@@ -302,7 +302,7 @@ def descriptive_statistics():
     st.subheader("Barplot")
     categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
     if categorical_columns:
-        col = st.selectbox("Wähle eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
+        col = st.selectbox("Wählen Sie eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
         fig, ax = plt.subplots()
         df[col].value_counts().plot(kind='bar', ax=ax)
         ax.set_title(f"Barplot von {col}")
@@ -312,8 +312,8 @@ def descriptive_statistics():
 
     st.subheader("Stacked Barplot")
     if len(categorical_columns) >= 2:
-        col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="stacked_bar_x")
-        col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="stacked_bar_y")
+        col_x = st.selectbox("Wählen Sie die erste kategoriale Variable", categorical_columns, key="stacked_bar_x")
+        col_y = st.selectbox("Wählen Sie die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="stacked_bar_y")
         contingency_table = pd.crosstab(df[col_x], df[col_y])
         fig, ax = plt.subplots()
         contingency_table.plot(kind="bar", stacked=True, ax=ax)
@@ -323,10 +323,10 @@ def descriptive_statistics():
         st.warning("Mindestens zwei kategoriale Spalten für gestapelten Barplot erforderlich.")
 
     st.subheader("Weitere Visualisierungen")
-    additional_plot = st.selectbox("Wähle eine zusätzliche Visualisierung", ["Boxplot", "Scatterplot", "Violinplot", "Pairplot"])
+    additional_plot = st.selectbox("Wählen Sie eine zusätzliche Visualisierung", ["Boxplot", "Scatterplot", "Violinplot", "Pairplot"])
     if additional_plot == "Boxplot":
         if numeric_columns:
-            col = st.selectbox("Wähle eine numerische Spalte für den Boxplot", numeric_columns, key="boxplot")
+            col = st.selectbox("Wählen Sie eine numerische Spalte für den Boxplot", numeric_columns, key="boxplot")
             fig, ax = plt.subplots()
             sns.boxplot(y=df[col], ax=ax)
             ax.set_title(f"Boxplot von {col}")
@@ -335,9 +335,9 @@ def descriptive_statistics():
             st.warning("Keine numerischen Spalten für Boxplot gefunden.")
     elif additional_plot == "Scatterplot":
         if len(numeric_columns) >= 2:
-            col_x = st.selectbox("Wähle die X-Achse", numeric_columns, key="scatter_x")
+            col_x = st.selectbox("Wählen Sie die X-Achse", numeric_columns, key="scatter_x")
             col_y_options = [col for col in numeric_columns if col != col_x]
-            col_y = st.selectbox("Wähle die Y-Achse", col_y_options, key="scatter_y")
+            col_y = st.selectbox("Wählen Sie die Y-Achse", col_y_options, key="scatter_y")
             fig, ax = plt.subplots()
             sns.scatterplot(data=df, x=col_x, y=col_y, ax=ax)
             ax.set_title(f"Scatterplot: {col_x} vs. {col_y}")
@@ -346,7 +346,7 @@ def descriptive_statistics():
             st.warning("Mindestens zwei numerische Spalten sind für einen Scatterplot erforderlich.")
     elif additional_plot == "Violinplot":
         if numeric_columns:
-            col = st.selectbox("Wähle eine numerische Spalte für den Violinplot", numeric_columns, key="violinplot")
+            col = st.selectbox("Wählen Sie eine numerische Spalte für den Violinplot", numeric_columns, key="violinplot")
             fig, ax = plt.subplots()
             sns.violinplot(y=df[col], ax=ax)
             ax.set_title(f"Violinplot von {col}")
@@ -369,7 +369,7 @@ def descriptive_statistics():
 def advanced_analyses():
     st.header("Statistische Analysen: t-Test, Korrelation, Chi², Regression, ANOVA")
     if "df" not in st.session_state:
-        st.warning("Bitte lade zuerst einen Datensatz hoch.")
+        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
 
@@ -383,7 +383,7 @@ def advanced_analyses():
         st.write(f"**H₀:** {st.session_state['current_hypothesis']['null_hypothesis']}")
         st.write(f"**H₁:** {st.session_state['current_hypothesis']['alt_hypothesis']}")
     else:
-        st.warning("Keine gespeicherte Hypothese. Bitte definiere eine Hypothese im Hypothesenmanager.")
+        st.warning("Keine gespeicherte Hypothese. Bitte definieren Sie eine Hypothese im Hypothesenmanager.")
 
     # t-Test
     if analysis_type == "t-Test":
@@ -647,7 +647,7 @@ def pdf_bericht():
     st.header("PDF Bericht")
     st.info(
         """
-        Wähle die Inhalte aus, die in den PDF-Bericht aufgenommen werden sollen:
+        Wählen Sie die Inhalte aus, die in den PDF-Bericht aufgenommen werden sollen:
         - Deskriptive Statistiken
         - Korrelationsmatrix
         - Diagramme (z. B. Histogramme, Boxplots)
@@ -745,7 +745,7 @@ def hypothesen_manager():
 
     # Prüfen, ob ein Datensatz vorhanden ist
     if "df" not in st.session_state:
-        st.warning("Bitte lade zuerst einen Datensatz hoch, bevor du Hypothesen definierst.")
+        st.warning("Bitte laden Sie zuerst einen Datensatz hoch, bevor Sie Hypothesen definieren.")
         return
 
     # Datensatz laden und Spalten identifizieren
@@ -768,8 +768,8 @@ def hypothesen_manager():
     st.subheader("Hypothesenformulierung")
     if hypothesis_type == "t-Test":
         if numeric_columns and categorical_columns:
-            selected_numeric = st.selectbox("Wähle eine numerische Variable", numeric_columns, key="ttest_numeric")
-            selected_category = st.selectbox("Wähle eine kategoriale Variable", categorical_columns, key="ttest_category")
+            selected_numeric = st.selectbox("Wählen Sie eine numerische Variable", numeric_columns, key="ttest_numeric")
+            selected_category = st.selectbox("Wählen Sie eine kategoriale Variable", categorical_columns, key="ttest_category")
             groups = df[selected_category].unique()
             if len(groups) != 2:
                 st.warning("Für einen t-Test müssen genau zwei Gruppen vorhanden sein.")
@@ -790,8 +790,8 @@ def hypothesen_manager():
 
     elif hypothesis_type == "Korrelation":
         if len(numeric_columns) >= 2:
-            col_x = st.selectbox("Wähle die erste numerische Variable", numeric_columns, key="corr_x")
-            col_y = st.selectbox("Wähle die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="corr_y")
+            col_x = st.selectbox("Wählen Sie die erste numerische Variable", numeric_columns, key="corr_x")
+            col_y = st.selectbox("Wählen Sie die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="corr_y")
             st.markdown(f"**Automatisch generierte Hypothesen:**")
             st.write(f"**H₀:** Es besteht keine lineare Korrelation zwischen '{col_x}' und '{col_y}'.")
             st.write(f"**H₁:** Es besteht eine lineare Korrelation zwischen '{col_x}' und '{col_y}'.")
@@ -807,8 +807,8 @@ def hypothesen_manager():
 
     elif hypothesis_type == "Chi²-Test":
         if len(categorical_columns) >= 2:
-            col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="chi2_x")
-            col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="chi2_y")
+            col_x = st.selectbox("Wählen Sie die erste kategoriale Variable", categorical_columns, key="chi2_x")
+            col_y = st.selectbox("Wählen Sie die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="chi2_y")
             st.markdown(f"**Automatisch generierte Hypothesen:**")
             st.write(f"**H₀:** Es besteht keine Abhängigkeit zwischen '{col_x}' und '{col_y}'.")
             st.write(f"**H₁:** Es besteht eine Abhängigkeit zwischen '{col_x}' und '{col_y}'.")
@@ -826,7 +826,7 @@ def hypothesen_manager():
         if len(numeric_columns) >= 2:
             target_col = st.selectbox("Wähle die Zielvariable (Y)", numeric_columns, key="regression_y")
             features_possible = [col for col in numeric_columns if col != target_col]
-            selected_features = st.multiselect("Wähle unabhängige Variablen (X)", features_possible, key="regression_x")
+            selected_features = st.multiselect("Wählen Sie unabhängige Variablen (X)", features_possible, key="regression_x")
 
             if selected_features:
                 st.markdown(f"**Automatisch generierte Hypothesen:**")
@@ -847,7 +847,7 @@ def hypothesen_manager():
     # Hypothese validieren
     st.markdown("---")
     st.subheader("Hypothese validieren")
-    st.info("Klicke auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
+    st.info("Klicken Sie auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
 
     if st.button("Hypothese testen"):
         if "current_hypothesis" in st.session_state:
