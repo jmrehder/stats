@@ -282,6 +282,29 @@ def descriptive_statistics():
     else:
         st.warning("Keine numerischen Spalten für Korrelationsmatrix gefunden.")
 
+    st.subheader("Barplot")
+    categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
+    if categorical_columns:
+        col = st.selectbox("Wähle eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
+        fig, ax = plt.subplots()
+        df[col].value_counts().plot(kind='bar', ax=ax)
+        ax.set_title(f"Barplot von {col}")
+        st.pyplot(fig)
+    else:
+        st.warning("Keine kategorialen Spalten für Barplot gefunden.")
+
+    st.subheader("Stacked Barplot")
+    if len(categorical_columns) >= 2:
+        col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="stacked_bar_x")
+        col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="stacked_bar_y")
+        contingency_table = pd.crosstab(df[col_x], df[col_y])
+        fig, ax = plt.subplots()
+        contingency_table.plot(kind="bar", stacked=True, ax=ax)
+        ax.set_title(f"Gestapelter Barplot von {col_x} und {col_y}")
+        st.pyplot(fig)
+    else:
+        st.warning("Mindestens zwei kategoriale Spalten für gestapelten Barplot erforderlich.")
+
     st.subheader("Weitere Visualisierungen")
     additional_plot = st.selectbox("Wähle eine zusätzliche Visualisierung", ["Boxplot", "Scatterplot", "Violinplot", "Pairplot"])
     if additional_plot == "Boxplot":
@@ -321,6 +344,7 @@ def descriptive_statistics():
             st.image("pairplot.png")
         else:
             st.warning("Mindestens zwei numerische Spalten für Pairplot erforderlich.")
+
 
 #########################################
 # Funktion: Erweiterte Analysen         #
