@@ -480,7 +480,8 @@ def advanced_analyses():
             **Lineare Regression**
 
             Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren unabhängigen Variablen (X).
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/ereg.html
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/ereg.html und
+            https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/mreg.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
