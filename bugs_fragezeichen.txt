@@ -1,0 +1,17 @@
+habe mich mal durch die tolle Anwendung geklickt und auf typos, Nutzbarkeit gerprüft. 
+Hier meine Anmerkungen:
+
+
+***Startseite: keinerlei Einwände. Sehr strukturiert, übersichtlich.
+einzig: Navigation "Wähle eine Ansicht". Im Begrüßungstext siezen wir. Das sollten wir vereinheitlichen.
+
+***Seaborn-Datensatz laden:
+"Wähle einen Datensatz" auch wieder in die Sie Form
+- Beschreibung von brain networks, dowjones,geyser, glue, healthexp, mpg, saice, taxis, fehlt
+
+***Datei Upload: funktioniert
+Nur hier wäre wieder Du/Sie
+
+und das mit dem Du / Sie zieht sich dann durch die ganzen Unterseiten.
+
+Wenn Ihr möchtet, kann ich gerne mich um die Beschreibungen und Texte kümmern und das dann dementsprechend in den Code einbringen.
