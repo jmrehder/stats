@@ -130,7 +130,7 @@ def seaborn_datasets():
         st.error("Fehler beim Abrufen der Datensätze. Bitte überprüfen Sie Ihre Seaborn-Installation.")
         return
     # Dropdown-Menü für die Auswahl eines Datensatzes
-    selected_dataset = st.selectbox("Wähle einen Datensatz", dataset_names)
+    selected_dataset = st.selectbox("Wählen Sie einen Datensatz", dataset_names)
     # Automatische Anzeige der Beschreibung
     description = dataset_descriptions.get(selected_dataset, "Keine Beschreibung verfügbar.")
     st.write(f"**Beschreibung von {selected_dataset}:**")
