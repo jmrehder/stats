@@ -147,6 +147,7 @@ def seaborn_datasets():
             st.dataframe(df.head(preview_rows))
         except Exception as e:
             st.error(f"Fehler beim Laden des Datensatzes '{selected_dataset}': {e}")
+
 #########################################
 # Funktion: Daten laden                 #
 #########################################
@@ -289,42 +290,25 @@ def descriptive_statistics():
         st.warning("Keine numerischen Spalten für Histogramm gefunden.")
 
     st.subheader("Korrelationsmatrix")
+    if numeric_columns:
+        corr = df.corr(numeric_only=True)
+        fig_corr, ax_corr = plt.subplots(figsize=(6, 4))
+        sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr)
+        ax_corr.set_title("Korrelationsmatrix")
+        st.pyplot(fig_corr)
+    else:
+        st.warning("Keine numerischen Spalten für Korrelationsmatrix gefunden.")
 
-if numeric_columns:  # Prüfen, ob numerische Spalten vorhanden sind
-    corr = df.corr(numeric_only=True)  # Berechnung der Korrelationsmatrix
-    fig_corr, ax_corr = plt.subplots(figsize=(6, 4))  # Erstellen der Plot-Größe
-    
-    # Kürze die Spaltennamen auf maximal 10 Zeichen
-    short_labels = [col[:10] for col in corr.columns]
-    
-    # Erstelle die Heatmap mit gekürzten Labels
-    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax_corr, xticklabels=short_labels, yticklabels=short_labels)
-    ax_corr.set_title("Korrelationsmatrix (gekürzte Labels)")  # Setze Titel für die Heatmap
-    
-    # Heatmap in Streamlit anzeigen
-    st.pyplot(fig_corr)
-else:
-    # Warnung anzeigen, wenn keine numerischen Spalten vorhanden sind
-    st.warning("Keine numerischen Spalten für Korrelationsmatrix gefunden.")
-
-st.subheader("Barplot")
-
-# Auswahl der kategorialen Spalten
-categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
-
-if categorical_columns:  # Prüfen, ob kategoriale Spalten vorhanden sind
-    col = st.selectbox("Wähle eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
-    fig, ax = plt.subplots()
-    
-    # Barplot erstellen
-    df[col].value_counts().plot(kind='bar', ax=ax)
-    ax.set_title(f"Barplot von {col}")  # Setze Titel für den Barplot
-    
-    # Barplot in Streamlit anzeigen
-    st.pyplot(fig)
-else:
-    # Warnung anzeigen, wenn keine kategorialen Spalten vorhanden sind
-    st.warning("Keine kategorialen Spalten für Barplot gefunden.")
+    st.subheader("Barplot")
+    categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
+    if categorical_columns:
+        col = st.selectbox("Wähle eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
+        fig, ax = plt.subplots()
+        df[col].value_counts().plot(kind='bar', ax=ax)
+        ax.set_title(f"Barplot von {col}")
+        st.pyplot(fig)
+    else:
+        st.warning("Keine kategorialen Spalten für Barplot gefunden.")
 
     st.subheader("Stacked Barplot")
     if len(categorical_columns) >= 2:
