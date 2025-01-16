@@ -393,6 +393,7 @@ def advanced_analyses():
             **t-Test für unabhängige Stichproben**
 
             Der t-Test wird verwendet, um festzustellen, ob sich die Mittelwerte zweier Gruppen signifikant unterscheiden.
+            Weitere Infos: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/ttestabh.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
