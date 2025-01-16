@@ -450,6 +450,7 @@ def advanced_analyses():
             **Chi²-Test für Unabhängigkeit**
 
             Der Chi²-Test prüft, ob ein Zusammenhang zwischen zwei kategorialen Variablen besteht.
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/pearsonzush.html
             """)
 
         categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
