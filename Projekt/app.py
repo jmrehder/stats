@@ -289,7 +289,7 @@ def descriptive_statistics():
         st.warning("Keine numerischen Spalten für Histogramm gefunden.")
 
     st.subheader("Korrelationsmatrix")
-if numeric_columns:
+    if numeric_columns:
     corr = df.corr(numeric_only=True)
     fig_corr, ax_corr = plt.subplots(figsize=(6, 4))
     # Kürze die Spaltennamen auf maximal 10 Zeichen
