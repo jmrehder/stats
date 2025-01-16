@@ -145,6 +145,15 @@ def load_data(file, file_type):
 #########################################
 # Funktion: Datei-Upload                #
 #########################################
+@st.cache_data
+def load_data(file, file_type):
+    """Lädt Daten aus einer CSV- oder Excel-Datei in einen DataFrame."""
+    if file_type == "csv":
+        return pd.read_csv(file)
+    elif file_type == "excel":
+        return pd.read_excel(file, sheet_name=None)  # Unterstützt mehrere Blätter
+
+
 def file_uploader():
     st.header("Lade einen Datensatz hoch")
     uploaded_file = st.file_uploader("Wähle eine CSV- oder Excel-Datei aus", type=["csv", "xlsx", "xls"])
@@ -154,10 +163,15 @@ def file_uploader():
         else:
             file_type = "excel"
         df = load_data(uploaded_file, file_type)
+        if isinstance(df, dict):
+            sheet_names = list(df.keys())
+            selected_sheet = st.selectbox("Wähle ein Arbeitsblatt", sheet_names)
+            df = df[selected_sheet]
         st.session_state["df"] = df
         st.success("Datei erfolgreich hochgeladen!")
         st.write("Vorschau des Datensatzes:")
         st.dataframe(df.head())
+
 
 #########################################
 # Funktion: Daten-Exploration           #
