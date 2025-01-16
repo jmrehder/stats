@@ -468,6 +468,15 @@ def advanced_analyses():
             st.write(f"**Adj. R² (Angepasstes Bestimmtheitsmaß):** {model.rsquared_adj:.4f}")
             st.write(f"**F-Statistik:** {model.fvalue:.4f}")
             st.write(f"**p-Wert der F-Statistik:** {model.f_pvalue:.4e}")
+
+            st.write("**Deutung des p-Werts der F-Statistik:**")
+            if model.f_pvalue < 0.001:
+                st.info("Der p-Wert der F-Statistik ist sehr klein (p < 0.001), was darauf hinweist, dass das Modell insgesamt hochsignifikant ist.")
+            elif model.f_pvalue < 0.05:
+                st.info("Der p-Wert der F-Statistik ist signifikant (p < 0.05), was darauf hinweist, dass das Modell insgesamt statistisch signifikant ist.")
+            else:
+                st.warning("Der p-Wert der F-Statistik ist nicht signifikant (p ≥ 0.05), was darauf hinweist, dass das Modell möglicherweise keine gute Erklärung für die Zielvariable liefert.")
+
             st.write("**Deutung:**")
             if model.rsquared > 0.7:
                 st.info("Das Modell erklärt einen hohen Anteil der Varianz in der Zielvariable.")
