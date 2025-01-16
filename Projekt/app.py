@@ -95,42 +95,58 @@ def seaborn_datasets():
     st.info(
         """
         Hier können Sie einen vordefinierten Datensatz aus der Seaborn-Bibliothek laden.
-        Klicken Sie auf den Button, um eine Beschreibung zu erhalten und den Datensatz zu laden.
+        Wählen Sie einen Datensatz aus, um eine Beschreibung und den Datensatz anzuzeigen.
         """
     )
-    
+    # Dataset-Beschreibungen
     dataset_descriptions = {
-        "anscombe": "Vier Datensätze, die zeigen, wie identische Statistiken unterschiedliche Verteilungen verdecken können.",
-        "attention": "Ein Datensatz, der die Aufmerksamkeit von Probanden bei verschiedenen Aufgaben untersucht.",
-        "car_crashes": "Daten über Verkehrsunfälle in verschiedenen US-Bundesstaaten.",
-        "diamonds": "Ein Datensatz mit Preisen und Merkmalen von Diamanten.",
-        "dots": "Bewegungsdaten von Punkten auf einem Bildschirm.",
-        "exercise": "Daten zu körperlichen Übungen und deren Auswirkungen auf die Gesundheit.",
-        "flights": "Monatliche Fluggastzahlen über mehrere Jahre.",
-        "fmri": "fMRT-Daten von Probanden unter verschiedenen Bedingungen.",
-        "gammas": "Daten zu Gammastrahlen-Messungen.",
-        "iris": "Messungen von Irisblumen (Länge und Breite von Kelch- und Blütenblättern).",
-        "penguins": "Daten zu verschiedenen Pinguinarten, einschließlich Gewicht und Flossenlänge.",
-        "planets": "Entdeckte Exoplaneten mit ihren Eigenschaften.",
-        "tips": "Trinkgeld-Daten aus einem Restaurant.",
-        "titanic": "Daten zu Passagieren der Titanic, einschließlich Überlebensstatus und Klassen.",
+        "anagrams": "Ergebnisse eines Experiments zur Untersuchung der Reaktionszeiten bei der Lösung von Anagrammen. 56 Zeilen, 3 Spalten",
+        "anscombe": "Vier Datensätze, die zeigen, wie identische Statistiken unterschiedliche Verteilungen verdecken können. 44 Zeilen, 3 Spalten",
+        "attention": "Ein Datensatz, der die Aufmerksamkeit von Probanden bei verschiedenen Aufgaben untersucht. 280 Zeilen, 3 Spalten",
+        "brain_networks": "Informationen über die Netzwerke von Gehirnaktivitäten, die bei verschiedenen Hirnregionen gemessen wurden . 923 Zeilen, 63 Spalten",
+        "car_crashes": "Daten über Verkehrsunfälle in verschiedenen US-Bundesstaaten. 51 Zeilen, 8 Spalten",
+        "diamonds": "Ein Datensatz mit Preisen und Merkmalen von Diamanten. 53940 Zeilen, 10 Spalten",
+        "dots": "Bewegungsdaten von Punkten auf einem Bildschirm. 180 Zeilen, 4 Spalten",
+        "dowjones": "historische Aktienkurse, die zur Analyse der Performance des Aktienindex verwendet werden können. 649 Zeilen,2Spalten",
+        "exercise": "Daten zu körperlichen Übungen und deren Auswirkungen auf die Gesundheit. 90 Zeilen, 4 Spalten",
+        "flights": "Monatliche Fluggastzahlen über mehrere Jahre. 144 Zeilen, 3 Spalten",
+        "fmri": "fMRT-Daten von Probanden unter verschiedenen Bedingungen. 1064 Zeilen, 5 Spalten",
+        "geyser": "Die Wartezeit und Dauer zwischen Eruptionen des Geysirs Old Faithful im Yellowstone-Nationalpark. 272 Zeilen, 3 Spalten",
+        "glue":" Die Fähigkeit von Modellen zur Verarbeitung und Analyse natürlicher Sprache, 64 Zeilen, 5 Spalten",
+        "healthexp": "Datensatz untersucht den Zusammenhang zwischen Gesundheitsausgaben pro Kopf und der Lebenserwartung in verschiedenen Ländern. 274 Zeilen, 4 Spalten",
+        "iris": "Messungen von Irisblumen (Länge und Breite von Kelch- und Blütenblättern). 150 Zeilen, 5 Spalten",
+        "mpg": "Daten zur Kraftstoffeffizienz (miles per gallon) von Autos, einschließlich Eigenschaften wie Zylinderanzahl, Hubraum, Gewicht und Herkunft. 398 Zeilen, 9 Spalten",
+        "penguins": "Daten zu verschiedenen Pinguinarten, einschließlich Gewicht und Flossenlänge. 344 Zeilen, 7 Spalten",
+        "planets": "Entdeckte Exoplaneten mit ihren Eigenschaften. 1035 Zeilen, 6 Spalten",
+        "seaice":"Untersucht die Veränderung der Meereisausdehnung über die Zeit, typischerweise in der Arktis oder Antarktis. 13175 Zeilen, 2 Spalten ",
+        "taxis":"Beschreibt Fahrten mit Taxis, einschließlich Informationen wie Fahrtdauer, Distanz, Kosten, Trinkgeld und Zahlungsarten. 6433 Zeilen, 14",
+        "tips": "Trinkgeld-Daten aus einem Restaurant. 244 Zeilen, 7 Spalten",
+        "titanic": "Daten zu Passagieren der Titanic, einschließlich Überlebensstatus und Klassen. 891 Zeilen, 15 Spalten",
     }
-    
-    dataset_names = sns.get_dataset_names()
-    
+    # Abrufen der Datensätze
+    try:
+        dataset_names = sns.get_dataset_names()
+    except Exception as e:
+        st.error("Fehler beim Abrufen der Datensätze. Bitte überprüfen Sie Ihre Seaborn-Installation.")
+        return
+    # Dropdown-Menü für die Auswahl eines Datensatzes
     selected_dataset = st.selectbox("Wähle einen Datensatz", dataset_names)
-    if st.button("Beschreibung anzeigen"):
-        description = dataset_descriptions.get(selected_dataset, "Keine Beschreibung verfügbar.")
-        st.write(f"**Beschreibung von {selected_dataset}:**")
-        st.write(description)
-    
+    # Automatische Anzeige der Beschreibung
+    description = dataset_descriptions.get(selected_dataset, "Keine Beschreibung verfügbar.")
+    st.write(f"**Beschreibung von {selected_dataset}:**")
+    st.write(description)
+    # Datensatz laden und anzeigen
     if st.button("Datensatz laden"):
-        df = sns.load_dataset(selected_dataset)
-        st.session_state["df"] = df
-        st.success(f"Datensatz '{selected_dataset}' erfolgreich geladen!")
-        st.write("Vorschau des Datensatzes:")
-        st.dataframe(df.head())
-
+        try:
+            df = sns.load_dataset(selected_dataset)
+            st.session_state["df"] = df
+            st.success(f"Datensatz '{selected_dataset}' erfolgreich geladen!")
+            # Automatische Anzeige der Vorschau des Datensatzes
+            st.write("Vorschau des Datensatzes:")
+            preview_rows = st.slider("Anzahl der Vorschauzeilen", min_value=5, max_value=min(len(df), 100), value=5)
+            st.dataframe(df.head(preview_rows))
+        except Exception as e:
+            st.error(f"Fehler beim Laden des Datensatzes '{selected_dataset}': {e}")
 #########################################
 # Funktion: Daten laden                 #
 #########################################
