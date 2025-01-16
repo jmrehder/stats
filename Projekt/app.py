@@ -393,7 +393,7 @@ def advanced_analyses():
             **t-Test für unabhängige Stichproben**
 
             Der t-Test wird verwendet, um festzustellen, ob sich die Mittelwerte zweier Gruppen signifikant unterscheiden.
-            Weitere Infos: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/ttestabh.html
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/ttestabh.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -425,6 +425,7 @@ def advanced_analyses():
             **Pearson-Korrelation**
 
             Die Pearson-Korrelation misst die Stärke und Richtung eines linearen Zusammenhangs zwischen zwei numerischen Variablen.
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/korrelation.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -482,6 +483,7 @@ def advanced_analyses():
             **Lineare Regression**
 
             Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren unabhängigen Variablen (X).
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/ereg.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -577,6 +579,7 @@ def advanced_analyses():
             **ANOVA (Analysis of Variance)**
 
             Die ANOVA wird verwendet, um festzustellen, ob es signifikante Unterschiede zwischen den Mittelwerten von mehr als zwei Gruppen gibt.
+            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/mvarianz.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
