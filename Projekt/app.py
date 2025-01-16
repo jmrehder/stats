@@ -326,7 +326,7 @@ def descriptive_statistics():
 # Funktion: Erweiterte Analysen         #
 #########################################
 def advanced_analyses():
-    st.header("Statistische Analysen: t-Test, Korrelation, Chi², Regression")
+    st.header("Statistische Analysen: t-Test, Korrelation, Chi², Regression, ANOVA")
     if "df" not in st.session_state:
         st.warning("Bitte lade zuerst einen Datensatz hoch.")
         return
@@ -334,7 +334,7 @@ def advanced_analyses():
 
     analysis_type = st.radio(
         "Welche Analyse möchten Sie durchführen?",
-        ("t-Test", "Korrelation", "Chi²-Test", "Regression")
+        ("t-Test", "Korrelation", "Chi²-Test", "Regression", "ANOVA")
     )
 
     if "current_hypothesis" in st.session_state:
@@ -352,14 +352,6 @@ def advanced_analyses():
             **t-Test für unabhängige Stichproben**
 
             Der t-Test wird verwendet, um festzustellen, ob sich die Mittelwerte zweier Gruppen signifikant unterscheiden.
-            **Anwendungsbeispiele:**
-            - Vergleich des durchschnittlichen Gewichts von Männern und Frauen.
-            - Vergleich von Testergebnissen zwischen zwei verschiedenen Schulklassen.
-
-            **Voraussetzungen:**
-            1. **Unabhängigkeit der Gruppen**: Die Messungen in einer Gruppe dürfen nicht von der anderen Gruppe beeinflusst werden.
-            2. **Normalverteilung**: Die Zielvariable sollte in beiden Gruppen annähernd normalverteilt sein.
-            3. **Varianzhomogenität**: Die Varianzen der beiden Gruppen sollten ähnlich sein. Falls nicht, kann ein angepasster t-Test (Welch-Test) verwendet werden.
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -391,19 +383,6 @@ def advanced_analyses():
             **Pearson-Korrelation**
 
             Die Pearson-Korrelation misst die Stärke und Richtung eines linearen Zusammenhangs zwischen zwei numerischen Variablen.
-
-            **Anwendungsbeispiele:**
-            - Zusammenhang zwischen Körpergröße und Gewicht.
-            - Zusammenhang zwischen Lernzeit und Testergebnis.
-
-            **Interpretation des Korrelationskoeffizienten (r):**
-            - **r = 1**: Perfekte positive Korrelation (wenn eine Variable steigt, steigt die andere proportional).
-            - **r = -1**: Perfekte negative Korrelation (wenn eine Variable steigt, sinkt die andere proportional).
-            - **r = 0**: Kein linearer Zusammenhang zwischen den Variablen.
-
-            **Voraussetzungen:**
-            1. **Linearität**: Es sollte ein linearer Zusammenhang zwischen den Variablen bestehen.
-            2. **Normalverteilung**: Beide Variablen sollten annähernd normalverteilt sein.
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -428,18 +407,6 @@ def advanced_analyses():
             **Chi²-Test für Unabhängigkeit**
 
             Der Chi²-Test prüft, ob ein Zusammenhang zwischen zwei kategorialen Variablen besteht.
-
-            **Anwendungsbeispiele:**
-            - Besteht ein Zusammenhang zwischen Geschlecht und Berufswahl?
-            - Gibt es eine Abhängigkeit zwischen Rauchen (ja/nein) und Auftreten von Krankheiten (ja/nein)?
-
-            **Voraussetzungen:**
-            1. Die Daten müssen in einer Kreuztabelle zusammengefasst sein.
-            2. Erwartete Häufigkeiten in jeder Zelle der Kreuztabelle sollten mindestens 5 betragen.
-
-            **Interpretation:**
-            - Ein niedriger p-Wert (p < 0.05) deutet darauf hin, dass ein Zusammenhang zwischen den Variablen besteht.
-            - Ein hoher p-Wert (p ≥ 0.05) deutet darauf hin, dass die Variablen unabhängig sind.
             """)
 
         categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
@@ -452,6 +419,14 @@ def advanced_analyses():
         chi2, p_value, _, _ = stats.chi2_contingency(contingency_table)
         st.write(f"Chi²-Wert: {chi2:.4f}")
         st.write(f"p-Wert: {p_value:.4e}")
+
+        # Cramér's V Berechnung
+        n = contingency_table.sum().sum()
+        phi2 = chi2 / n
+        r, k = contingency_table.shape
+        cramers_v = np.sqrt(phi2 / min(r - 1, k - 1))
+        st.write(f"Cramér's V (Effektstärke): {cramers_v:.4f}")
+
         if p_value < 0.05:
             st.success("Die Variablen sind statistisch signifikant abhängig (p < 0.05).")
         else:
@@ -460,86 +435,114 @@ def advanced_analyses():
     # Regression
     elif analysis_type == "Regression":
         st.subheader("Lineare Regression (OLS)")
-    if st.button("Erklärung zur Regression"):
-        st.info("""
-        **Lineare Regression**
-
-        Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren
-        unabhängigen Variablen (X), um Vorhersagen zu treffen oder die Beziehung zu verstehen.
-
-        **Anwendungsbeispiele:**
-        - Vorhersage des Einkommens basierend auf Bildungsjahren.
-        - Zusammenhang zwischen Werbebudget und Verkaufszahlen.
-
-        **Voraussetzungen:**
-        1. **Linearität**: Der Zusammenhang zwischen den unabhängigen Variablen und der Zielvariablen sollte linear sein.
-        2. **Homoskedastizität**: Die Streuung der Residuen (Fehler) sollte über den Wertebereich konstant sein.
-        3. **Normalverteilung der Residuen**: Die Fehler sollten annähernd normalverteilt sein.
-        4. **Unabhängigkeit der Beobachtungen**: Es sollte keine Autokorrelation zwischen den Fehlern bestehen.
-        """)
-
-    numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
-    if not numeric_columns:
-        st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
-        return
-    target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
-    features_possible = [col for col in numeric_columns if col != target_col]
-    selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
-    if st.button("Trainiere Regressionsmodell"):
-        if not selected_features:
-            st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
-            return
-        X = df[selected_features]
-        y = df[target_col]
-        data = pd.concat([X, y], axis=1).dropna()
-        X = data[selected_features]
-        y = data[target_col]
-        X_const = sm.add_constant(X)
-        model = sm.OLS(y, X_const).fit()
-        st.write("**Regressionszusammenfassung**")
-        st.text(model.summary())
-        st.session_state["regression_model"] = model
-        st.session_state["regression_features"] = selected_features
-        st.session_state["regression_target"] = target_col
-        st.session_state["regression_X_const"] = X_const
-        
-        # Regressionslinie plotten
-        if len(selected_features) == 1:
-            feature = selected_features[0]
-            fig, ax = plt.subplots()
-            ax.scatter(data[feature], y, alpha=0.5, label="Datenpunkte")
-            x_range = np.linspace(data[feature].min(), data[feature].max(), 100)
-            x_range_df = pd.DataFrame({feature: x_range})
-            x_range_df_const = sm.add_constant(x_range_df)
-            y_pred_line = model.predict(x_range_df_const)
-            ax.plot(x_range, y_pred_line, color="red", label="Regressionslinie")
-            ax.set_xlabel(feature)
-            ax.set_ylabel(target_col)
-            ax.legend()
-            st.pyplot(fig)
+        if st.button("Erklärung zur Regression"):
             st.info("""
-            **Interpretation der Regressionslinie:**
-            Die rote Linie zeigt, wie die Zielvariable (Y) mit der unabhängigen Variablen (X) zusammenhängt.
-            Ein steilerer Anstieg deutet auf eine stärkere Beziehung hin.
+            **Lineare Regression**
+
+            Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren unabhängigen Variablen (X).
             """)
 
-        # Homoskedastizität prüfen
-        st.subheader("Homoskedastizität (Residualanalyse)")
-        data["Vorhersage"] = model.predict(X_const)
-        data["Residuals"] = y - data["Vorhersage"]
-        fig_residuals, ax_residuals = plt.subplots()
-        ax_residuals.scatter(data["Vorhersage"], data["Residuals"], alpha=0.5)
-        ax_residuals.axhline(0, color="red", linestyle="--")
-        ax_residuals.set_xlabel("Vorhersagewerte")
-        ax_residuals.set_ylabel("Residuen")
-        ax_residuals.set_title("Residualplot: Vorhersagen vs. Residuen")
-        st.pyplot(fig_residuals)
-        st.info("""
-        **Interpretation des Residualplots:**
-        - Eine zufällige Streuung der Residuen (ohne erkennbares Muster) deutet auf Homoskedastizität hin.
-        - Falls ein Muster (z.B. Trichterform) erkennbar ist, könnte dies auf Heteroskedastizität hinweisen.
-        Heteroskedastizität bedeutet, dass das Modell in bestimmten Bereichen weniger zuverlässig ist.
-        """)
+        numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+        if not numeric_columns:
+            st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
+            return
+        target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
+        features_possible = [col for col in numeric_columns if col != target_col]
+        selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
+        if st.button("Trainiere Regressionsmodell"):
+            if not selected_features:
+                st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
+                return
+            X = df[selected_features]
+            y = df[target_col]
+            data = pd.concat([X, y], axis=1).dropna()
+            X = data[selected_features]
+            y = data[target_col]
+            X_const = sm.add_constant(X)
+            model = sm.OLS(y, X_const).fit()
+            st.write("**Regressionszusammenfassung**")
+            st.text(model.summary())
+
+            st.subheader("Ergebnisse der Regression")
+            st.write(f"**R² (Bestimmtheitsmaß):** {model.rsquared:.4f}")
+            st.write(f"**Adj. R² (Angepasstes Bestimmtheitsmaß):** {model.rsquared_adj:.4f}")
+            st.write(f"**F-Statistik:** {model.fvalue:.4f}")
+            st.write(f"**p-Wert der F-Statistik:** {model.f_pvalue:.4e}")
+            st.write("**Deutung:**")
+            if model.rsquared > 0.7:
+                st.info("Das Modell erklärt einen hohen Anteil der Varianz in der Zielvariable.")
+            elif model.rsquared > 0.4:
+                st.info("Das Modell erklärt einen moderaten Anteil der Varianz in der Zielvariable.")
+            else:
+                st.info("Das Modell erklärt nur einen geringen Anteil der Varianz in der Zielvariable.")
+
+            st.subheader("Koeffizienten")
+            coef_table = pd.DataFrame({
+                "Variable": model.params.index,
+                "Koeffizient": model.params.values,
+                "p-Wert": model.pvalues.values,
+                "95% CI (Untergrenze)": model.conf_int()[0],
+                "95% CI (Obergrenze)": model.conf_int()[1]
+            })
+            st.dataframe(coef_table)
+
+            st.write("**Interpretation der Koeffizienten:**")
+            for i, row in coef_table.iterrows():
+                if row["Variable"] == "const":
+                    st.write(f"Der konstante Term (Intercept) beträgt {row['Koeffizient']:.4f}.")
+                else:
+                    st.write(f"Eine Einheitserhöhung in {row['Variable']} führt zu einer Änderung von {row['Koeffizient']:.4f} in der Zielvariable.")
+
+            if len(selected_features) == 1:
+                feature = selected_features[0]
+                fig, ax = plt.subplots()
+                ax.scatter(data[feature], y, alpha=0.5, label="Datenpunkte")
+                x_range = np.linspace(data[feature].min(), data[feature].max(), 100)
+                x_range_df = pd.DataFrame({feature: x_range})
+                x_range_df_const = sm.add_constant(x_range_df)
+                y_pred_line = model.predict(x_range_df_const)
+                ax.plot(x_range, y_pred_line, color="red", label="Regressionslinie")
+                ax.set_xlabel(feature)
+                ax.set_ylabel(target_col)
+                ax.legend()
+                st.pyplot(fig)
+
+            st.subheader("Residualanalyse")
+            data["Vorhersage"] = model.predict(X_const)
+            data["Residuals"] = y - data["Vorhersage"]
+            fig_residuals, ax_residuals = plt.subplots()
+            ax_residuals.scatter(data["Vorhersage"], data["Residuals"], alpha=0.5)
+            ax_residuals.axhline(0, color="red", linestyle="--")
+            ax_residuals.set_xlabel("Vorhersagewerte")
+            ax_residuals.set_ylabel("Residuen")
+            ax_residuals.set_title("Residualplot: Vorhersagen vs. Residuen")
+            st.pyplot(fig_residuals)
+
+    # ANOVA (Varianzanalyse)
+    elif analysis_type == "ANOVA":
+        st.subheader("Varianzanalyse (ANOVA)")
+        if st.button("Erklärung zur ANOVA"):
+            st.info("""
+            **ANOVA (Analysis of Variance)**
+
+            Die ANOVA wird verwendet, um festzustellen, ob es signifikante Unterschiede zwischen den Mittelwerten von mehr als zwei Gruppen gibt.
+            """)
+
+        numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+        categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
+        if not numeric_columns or not categorical_columns:
+            st.warning("Ihr Datensatz benötigt mindestens eine numerische und eine kategoriale Spalte.")
+            return
+        group_col = st.selectbox("Wählen Sie die Gruppenspalte (kategorial)", categorical_columns)
+        numeric_col = st.selectbox("Wählen Sie die zu analysierende numerische Variable", numeric_columns)
+        groups = [df[df[group_col] == group][numeric_col].dropna() for group in df[group_col].unique()]
+        f_stat, p_value = stats.f_oneway(*groups)
+        st.write(f"F-Statistik: {f_stat:.4f}")
+        st.write(f"p-Wert: {p_value:.4e}")
+        if p_value < 0.05:
+            st.success("Es gibt signifikante Unterschiede zwischen den Gruppen (p < 0.05).")
+        else:
+            st.info("Keine signifikanten Unterschiede zwischen den Gruppen (p ≥ 0.05).")
 
 
 #########################################
@@ -680,6 +683,13 @@ def pdf_bericht():
 #########################################
 # Funktion: Hypothesenmanager           #
 #########################################
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+#########################################
+# Funktion: Hypothesenmanager           #
+#########################################
 def hypothesen_manager():
     st.header("Hypothesenmanager")
 
@@ -704,64 +714,9 @@ def hypothesen_manager():
         ["t-Test", "Korrelation", "Chi²-Test", "Regression"]
     )
 
-    # Erklärung hinzufügen
-    if st.checkbox("Mehr über diese Testart erfahren"):
-        if hypothesis_type == "t-Test":
-            st.info("Ein t-Test vergleicht die Mittelwerte zweier Gruppen, um festzustellen, ob ein signifikanter Unterschied zwischen ihnen besteht.")
-        elif hypothesis_type == "Korrelation":
-            st.info("Die Korrelationsanalyse prüft, ob ein linearer Zusammenhang zwischen zwei numerischen Variablen besteht.")
-        elif hypothesis_type == "Chi²-Test":
-            st.info("Ein Chi²-Test überprüft, ob zwischen zwei kategorialen Variablen eine Abhängigkeit besteht.")
-        elif hypothesis_type == "Regression":
-            st.info("Die Regression untersucht den Einfluss unabhängiger Variablen auf eine abhängige Variable.")
-
-    # Visualisierungen vor Hypothesenbildung
-    st.subheader("Datenvisualisierung")
-    if hypothesis_type == "t-Test" and numeric_columns and categorical_columns:
-        selected_numeric = st.selectbox("Wähle eine numerische Variable", numeric_columns, key="viz_ttest_numeric")
-        selected_category = st.selectbox("Wähle eine kategoriale Variable", categorical_columns, key="viz_ttest_category")
-
-        # Boxplot für numerische vs. kategoriale Variable
-        fig, ax = plt.subplots()
-        sns.boxplot(x=selected_category, y=selected_numeric, data=df, ax=ax)
-        ax.set_title(f"Boxplot von {selected_numeric} nach {selected_category}")
-        st.pyplot(fig)
-
-    elif hypothesis_type == "Korrelation" and len(numeric_columns) >= 2:
-        col_x = st.selectbox("Wähle die erste numerische Variable", numeric_columns, key="viz_corr_x")
-        col_y = st.selectbox("Wähle die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="viz_corr_y")
-
-        # Scatterplot für Korrelation
-        fig, ax = plt.subplots()
-        sns.scatterplot(x=col_x, y=col_y, data=df, ax=ax)
-        ax.set_title(f"Scatterplot: {col_x} vs. {col_y}")
-        st.pyplot(fig)
-
-    elif hypothesis_type == "Chi²-Test" and len(categorical_columns) >= 2:
-        col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="viz_chi2_x")
-        col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="viz_chi2_y")
-
-        # Heatmap für Kontingenztabelle
-        contingency_table = pd.crosstab(df[col_x], df[col_y])
-        fig, ax = plt.subplots()
-        sns.heatmap(contingency_table, annot=True, fmt="d", cmap="coolwarm", ax=ax)
-        ax.set_title(f"Kontingenztabelle: {col_x} vs. {col_y}")
-        st.pyplot(fig)
-
-    elif hypothesis_type == "Regression" and len(numeric_columns) >= 2:
-        target_col = st.selectbox("Wähle die Zielvariable (Y)", numeric_columns, key="viz_regression_y")
-        feature_col = st.selectbox("Wähle eine unabhängige Variable (X)", [col for col in numeric_columns if col != target_col], key="viz_regression_x")
-
-        # Scatterplot mit Regressionslinie
-        fig, ax = plt.subplots()
-        sns.regplot(x=feature_col, y=target_col, data=df, ax=ax, ci=None, line_kws={"color": "red"})
-        ax.set_title(f"Regression: {feature_col} vs. {target_col}")
-        st.pyplot(fig)
-
     # Hypothesenoptionen basierend auf der Auswahl
     st.subheader("Hypothesenformulierung")
     if hypothesis_type == "t-Test":
-        st.subheader("t-Test (unabhängige Stichproben)")
         if numeric_columns and categorical_columns:
             selected_numeric = st.selectbox("Wähle eine numerische Variable", numeric_columns, key="ttest_numeric")
             selected_category = st.selectbox("Wähle eine kategoriale Variable", categorical_columns, key="ttest_category")
@@ -776,13 +731,14 @@ def hypothesen_manager():
 
             if st.button("Hypothese speichern"):
                 st.session_state["current_hypothesis"] = {
+                    "type": "t-Test",
                     "null_hypothesis": f"Der Mittelwert von '{selected_numeric}' ist in beiden Gruppen gleich.",
                     "alt_hypothesis": f"Der Mittelwert von '{selected_numeric}' unterscheidet sich zwischen den Gruppen."
                 }
                 st.success("Hypothese wurde erfolgreich gespeichert!")
+                st.write(f"**Gespeicherte Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
 
     elif hypothesis_type == "Korrelation":
-        st.subheader("Korrelationsanalyse")
         if len(numeric_columns) >= 2:
             col_x = st.selectbox("Wähle die erste numerische Variable", numeric_columns, key="corr_x")
             col_y = st.selectbox("Wähle die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="corr_y")
@@ -792,13 +748,14 @@ def hypothesen_manager():
 
             if st.button("Hypothese speichern"):
                 st.session_state["current_hypothesis"] = {
+                    "type": "Korrelation",
                     "null_hypothesis": f"Es besteht keine lineare Korrelation zwischen '{col_x}' und '{col_y}'.",
                     "alt_hypothesis": f"Es besteht eine lineare Korrelation zwischen '{col_x}' und '{col_y}'."
                 }
                 st.success("Hypothese wurde erfolgreich gespeichert!")
+                st.write(f"**Gespeicherte Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
 
     elif hypothesis_type == "Chi²-Test":
-        st.subheader("Chi²-Test für Unabhängigkeit")
         if len(categorical_columns) >= 2:
             col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="chi2_x")
             col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="chi2_y")
@@ -808,13 +765,14 @@ def hypothesen_manager():
 
             if st.button("Hypothese speichern"):
                 st.session_state["current_hypothesis"] = {
+                    "type": "Chi²-Test",
                     "null_hypothesis": f"Es besteht keine Abhängigkeit zwischen '{col_x}' und '{col_y}'.",
                     "alt_hypothesis": f"Es besteht eine Abhängigkeit zwischen '{col_x}' und '{col_y}'."
                 }
                 st.success("Hypothese wurde erfolgreich gespeichert!")
+                st.write(f"**Gespeicherte Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
 
     elif hypothesis_type == "Regression":
-        st.subheader("Regression")
         if len(numeric_columns) >= 2:
             target_col = st.selectbox("Wähle die Zielvariable (Y)", numeric_columns, key="regression_y")
             features_possible = [col for col in numeric_columns if col != target_col]
@@ -827,43 +785,26 @@ def hypothesen_manager():
 
                 if st.button("Hypothese speichern"):
                     st.session_state["current_hypothesis"] = {
+                        "type": "Regression",
                         "null_hypothesis": f"Die unabhängigen Variablen {', '.join(selected_features)} haben keinen Einfluss auf '{target_col}'.",
                         "alt_hypothesis": f"Mindestens eine der unabhängigen Variablen {', '.join(selected_features)} hat einen Einfluss auf '{target_col}'."
                     }
                     st.success("Hypothese wurde erfolgreich gespeichert!")
+                    st.write(f"**Gespeicherte Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
             else:
                 st.warning("Bitte wählen Sie mindestens eine unabhängige Variable aus.")
 
-    # Übergang zur Validierung
+    # Hypothese validieren
     st.markdown("---")
     st.subheader("Hypothese validieren")
     st.info("Klicke auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
 
     if st.button("Hypothese testen"):
-        st.warning("Die Implementierung der Tests erfolgt im nächsten Schritt.")
+        if "current_hypothesis" in st.session_state:
+            st.write(f"**Aktuelle Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
+        else:
+            st.warning("Keine Hypothese gespeichert.")
 
-
-#########################################
-# Funktionen zur Hypothesen- und Ergebnisverwaltung
-#########################################
-def save_hypothesis(hypothesis_type, null_hypothesis, alt_hypothesis, metadata=None):
-    """Speichert die aktuelle Hypothese im Session-State."""
-    st.session_state["current_hypothesis"] = {
-        "type": hypothesis_type,
-        "null_hypothesis": null_hypothesis,
-        "alt_hypothesis": alt_hypothesis,
-        "metadata": metadata or {}
-    }
-    st.success("Hypothese erfolgreich gespeichert!")
-
-def store_test_results(test_name, p_value, decision):
-    """Speichert die Ergebnisse des zuletzt durchgeführten Tests."""
-    st.session_state["last_test"] = {
-        "test_name": test_name,
-        "p_value": p_value,
-        "decision": decision,
-    }
-    st.success("Testergebnisse gespeichert!")
 
 #########################################
 # Hauptblock                            #
