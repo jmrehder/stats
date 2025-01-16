@@ -141,10 +141,6 @@ def seaborn_datasets():
             df = sns.load_dataset(selected_dataset)
             st.session_state["df"] = df
             st.success(f"Datensatz '{selected_dataset}' erfolgreich geladen!")
-            # Automatische Anzeige der Vorschau des Datensatzes
-            st.write("Vorschau des Datensatzes:")
-            preview_rows = st.slider("Anzahl der Vorschauzeilen", min_value=5, max_value=min(len(df), 100), value=5)
-            st.dataframe(df.head(preview_rows))
         except Exception as e:
             st.error(f"Fehler beim Laden des Datensatzes '{selected_dataset}': {e}")
 
