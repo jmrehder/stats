@@ -20,7 +20,7 @@ def main():
     
     st.sidebar.title("Navigation")
     app_mode = st.sidebar.selectbox(
-        "Wählen Sie eine Ansicht",
+        "Wähle eine Ansicht",
         [
             "Startseite",
             "Seaborn-Datensatz laden",
@@ -100,28 +100,28 @@ def seaborn_datasets():
     )
     # Dataset-Beschreibungen
     dataset_descriptions = {
-        "anagrams": "Ergebnisse eines Experiments zur Untersuchung der Reaktionszeiten bei der Lösung von Anagrammen. Gesamtatensatz: 56 Zeilen, 3 Spalten",
-        "anscombe": "Vier Datensätze, die zeigen, wie identische Statistiken unterschiedliche Verteilungen verdecken können. Gesamtatensatz: 44 Zeilen, 3 Spalten",
-        "attention": "Ein Datensatz, der die Aufmerksamkeit von Probanden bei verschiedenen Aufgaben untersucht. Gesamtatensatz: 280 Zeilen, 3 Spalten",
-        "brain_networks": "Informationen über die Netzwerke von Gehirnaktivitäten, die bei verschiedenen Hirnregionen gemessen wurden . Gesamtatensatz: 923 Zeilen, 63 Spalten",
-        "car_crashes": "Daten über Verkehrsunfälle in verschiedenen US-Bundesstaaten. Gesamtatensatz: 51 Zeilen, 8 Spalten",
-        "diamonds": "Ein Datensatz mit Preisen und Merkmalen von Diamanten. Gesamtatensatz: 53940 Zeilen, 10 Spalten",
-        "dots": "Bewegungsdaten von Punkten auf einem Bildschirm. Gesamtatensatz: 180 Zeilen, 4 Spalten",
-        "dowjones": "historische Aktienkurse, die zur Analyse der Performance des Aktienindex verwendet werden können. Gesamtatensatz: 649 Zeilen,2Spalten",
-        "exercise": "Daten zu körperlichen Übungen und deren Auswirkungen auf die Gesundheit. Gesamtatensatz: 90 Zeilen, 4 Spalten",
-        "flights": "Monatliche Fluggastzahlen über mehrere Jahre. Gesamtatensatz: 144 Zeilen, 3 Spalten",
-        "fmri": "fMRT-Daten von Probanden unter verschiedenen Bedingungen. Gesamtatensatz: 1064 Zeilen, 5 Spalten",
-        "geyser": "Die Wartezeit und Dauer zwischen Eruptionen des Geysirs Old Faithful im Yellowstone-Nationalpark. Gesamtatensatz: 272 Zeilen, 3 Spalten",
-        "glue":" Die Fähigkeit von Modellen zur Verarbeitung und Analyse natürlicher Sprache, Gesamtatensatz: 64 Zeilen, 5 Spalten",
-        "healthexp": "Datensatz untersucht den Zusammenhang zwischen Gesundheitsausgaben pro Kopf und der Lebenserwartung in verschiedenen Ländern. Gesamtatensatz: 274 Zeilen, 4 Spalten",
-        "iris": "Messungen von Irisblumen (Länge und Breite von Kelch- und Blütenblättern). Gesamtatensatz: 150 Zeilen, 5 Spalten",
-        "mpg": "Daten zur Kraftstoffeffizienz (miles per gallon) von Autos, einschließlich Eigenschaften wie Zylinderanzahl, Hubraum, Gewicht und Herkunft. Gesamtatensatz: 398 Zeilen, 9 Spalten",
-        "penguins": "Daten zu verschiedenen Pinguinarten, einschließlich Gewicht und Flossenlänge. Gesamtatensatz: 344 Zeilen, 7 Spalten",
-        "planets": "Entdeckte Exoplaneten mit ihren Eigenschaften. Gesamtatensatz: 1035 Zeilen, 6 Spalten",
-        "seaice":"Untersucht die Veränderung der Meereisausdehnung über die Zeit, typischerweise in der Arktis oder Antarktis. Gesamtatensatz: 13175 Zeilen, 2 Spalten ",
-        "taxis":"Beschreibt Fahrten mit Taxis, einschließlich Informationen wie Fahrtdauer, Distanz, Kosten, Trinkgeld und Zahlungsarten. Gesamtatensatz: Gesamtatensatz: 6433 Zeilen, 14",
-        "tips": "Trinkgeld-Daten aus einem Restaurant. Gesamtatensatz: 244 Zeilen, 7 Spalten",
-        "titanic": "Daten zu Passagieren der Titanic, einschließlich Überlebensstatus und Klassen.  Gesamtatensatz: 891 Zeilen, 15 Spalten",
+        "anagrams": "Ergebnisse eines Experiments zur Untersuchung der Reaktionszeiten bei der Lösung von Anagrammen. 56 Zeilen, 3 Spalten",
+        "anscombe": "Vier Datensätze, die zeigen, wie identische Statistiken unterschiedliche Verteilungen verdecken können. 44 Zeilen, 3 Spalten",
+        "attention": "Ein Datensatz, der die Aufmerksamkeit von Probanden bei verschiedenen Aufgaben untersucht. 280 Zeilen, 3 Spalten",
+        "brain_networks": "Informationen über die Netzwerke von Gehirnaktivitäten, die bei verschiedenen Hirnregionen gemessen wurden . 923 Zeilen, 63 Spalten",
+        "car_crashes": "Daten über Verkehrsunfälle in verschiedenen US-Bundesstaaten. 51 Zeilen, 8 Spalten",
+        "diamonds": "Ein Datensatz mit Preisen und Merkmalen von Diamanten. 53940 Zeilen, 10 Spalten",
+        "dots": "Bewegungsdaten von Punkten auf einem Bildschirm. 180 Zeilen, 4 Spalten",
+        "dowjones": "historische Aktienkurse, die zur Analyse der Performance des Aktienindex verwendet werden können. 649 Zeilen,2Spalten",
+        "exercise": "Daten zu körperlichen Übungen und deren Auswirkungen auf die Gesundheit. 90 Zeilen, 4 Spalten",
+        "flights": "Monatliche Fluggastzahlen über mehrere Jahre. 144 Zeilen, 3 Spalten",
+        "fmri": "fMRT-Daten von Probanden unter verschiedenen Bedingungen. 1064 Zeilen, 5 Spalten",
+        "geyser": "Die Wartezeit und Dauer zwischen Eruptionen des Geysirs Old Faithful im Yellowstone-Nationalpark. 272 Zeilen, 3 Spalten",
+        "glue":" Die Fähigkeit von Modellen zur Verarbeitung und Analyse natürlicher Sprache, 64 Zeilen, 5 Spalten",
+        "healthexp": "Datensatz untersucht den Zusammenhang zwischen Gesundheitsausgaben pro Kopf und der Lebenserwartung in verschiedenen Ländern. 274 Zeilen, 4 Spalten",
+        "iris": "Messungen von Irisblumen (Länge und Breite von Kelch- und Blütenblättern). 150 Zeilen, 5 Spalten",
+        "mpg": "Daten zur Kraftstoffeffizienz (miles per gallon) von Autos, einschließlich Eigenschaften wie Zylinderanzahl, Hubraum, Gewicht und Herkunft. 398 Zeilen, 9 Spalten",
+        "penguins": "Daten zu verschiedenen Pinguinarten, einschließlich Gewicht und Flossenlänge. 344 Zeilen, 7 Spalten",
+        "planets": "Entdeckte Exoplaneten mit ihren Eigenschaften. 1035 Zeilen, 6 Spalten",
+        "seaice":"Untersucht die Veränderung der Meereisausdehnung über die Zeit, typischerweise in der Arktis oder Antarktis. 13175 Zeilen, 2 Spalten ",
+        "taxis":"Beschreibt Fahrten mit Taxis, einschließlich Informationen wie Fahrtdauer, Distanz, Kosten, Trinkgeld und Zahlungsarten. 6433 Zeilen, 14",
+        "tips": "Trinkgeld-Daten aus einem Restaurant. 244 Zeilen, 7 Spalten",
+        "titanic": "Daten zu Passagieren der Titanic, einschließlich Überlebensstatus und Klassen. 891 Zeilen, 15 Spalten",
     }
     # Abrufen der Datensätze
     try:
@@ -130,7 +130,7 @@ def seaborn_datasets():
         st.error("Fehler beim Abrufen der Datensätze. Bitte überprüfen Sie Ihre Seaborn-Installation.")
         return
     # Dropdown-Menü für die Auswahl eines Datensatzes
-    selected_dataset = st.selectbox("Wählen Sie einen Datensatz", dataset_names)
+    selected_dataset = st.selectbox("Wähle einen Datensatz", dataset_names)
     # Automatische Anzeige der Beschreibung
     description = dataset_descriptions.get(selected_dataset, "Keine Beschreibung verfügbar.")
     st.write(f"**Beschreibung von {selected_dataset}:**")
@@ -141,6 +141,10 @@ def seaborn_datasets():
             df = sns.load_dataset(selected_dataset)
             st.session_state["df"] = df
             st.success(f"Datensatz '{selected_dataset}' erfolgreich geladen!")
+            # Automatische Anzeige der Vorschau des Datensatzes
+            st.write("Vorschau des Datensatzes:")
+            preview_rows = st.slider("Anzahl der Vorschauzeilen", min_value=5, max_value=min(len(df), 100), value=5)
+            st.dataframe(df.head(preview_rows))
         except Exception as e:
             st.error(f"Fehler beim Laden des Datensatzes '{selected_dataset}': {e}")
 
@@ -168,8 +172,8 @@ def load_data(file, file_type):
 
 
 def file_uploader():
-    st.header("Laden Sie einen Datensatz hoch")
-    uploaded_file = st.file_uploader("Wählen Sie eine CSV- oder Excel-Datei aus", type=["csv", "xlsx", "xls"])
+    st.header("Lade einen Datensatz hoch")
+    uploaded_file = st.file_uploader("Wähle eine CSV- oder Excel-Datei aus", type=["csv", "xlsx", "xls"])
     if uploaded_file is not None:
         if uploaded_file.name.lower().endswith(".csv"):
             file_type = "csv"
@@ -178,7 +182,7 @@ def file_uploader():
         df = load_data(uploaded_file, file_type)
         if isinstance(df, dict):
             sheet_names = list(df.keys())
-            selected_sheet = st.selectbox("Wählen Sie ein Arbeitsblatt", sheet_names)
+            selected_sheet = st.selectbox("Wähle ein Arbeitsblatt", sheet_names)
             df = df[selected_sheet]
         st.session_state["df"] = df
         st.success("Datei erfolgreich hochgeladen!")
@@ -192,7 +196,7 @@ def file_uploader():
 def data_exploration():
     st.header("Erste Daten-Exploration")
     if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
+        st.warning("Bitte lade zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
     
@@ -225,7 +229,7 @@ def data_exploration():
 def datenbereinigung():
     st.header("Datenbereinigung: Fehlende Werte entfernen")
     if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
+        st.warning("Bitte lade zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
     st.write("Originale Anzahl der Zeilen:", df.shape[0])
@@ -254,7 +258,7 @@ def datenbereinigung():
 def descriptive_statistics():
     st.header("Deskriptive Statistik")
     if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
+        st.warning("Bitte lade zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
 
@@ -277,7 +281,7 @@ def descriptive_statistics():
     st.subheader("Histogramme")
     numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
     if numeric_columns:
-        column_to_plot = st.selectbox("Wählen Sie eine Spalte für das Histogramm", numeric_columns, key="histogram")
+        column_to_plot = st.selectbox("Wähle eine Spalte für das Histogramm", numeric_columns, key="histogram")
         fig, ax = plt.subplots()
         sns.histplot(df[column_to_plot], kde=True, ax=ax)
         ax.set_title(f"Histogram von {column_to_plot}")
@@ -298,7 +302,7 @@ def descriptive_statistics():
     st.subheader("Barplot")
     categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
     if categorical_columns:
-        col = st.selectbox("Wählen Sie eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
+        col = st.selectbox("Wähle eine kategoriale Spalte für den Barplot", categorical_columns, key="barplot")
         fig, ax = plt.subplots()
         df[col].value_counts().plot(kind='bar', ax=ax)
         ax.set_title(f"Barplot von {col}")
@@ -308,8 +312,8 @@ def descriptive_statistics():
 
     st.subheader("Stacked Barplot")
     if len(categorical_columns) >= 2:
-        col_x = st.selectbox("Wählen Sie die erste kategoriale Variable", categorical_columns, key="stacked_bar_x")
-        col_y = st.selectbox("Wählen Sie die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="stacked_bar_y")
+        col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="stacked_bar_x")
+        col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="stacked_bar_y")
         contingency_table = pd.crosstab(df[col_x], df[col_y])
         fig, ax = plt.subplots()
         contingency_table.plot(kind="bar", stacked=True, ax=ax)
@@ -319,10 +323,10 @@ def descriptive_statistics():
         st.warning("Mindestens zwei kategoriale Spalten für gestapelten Barplot erforderlich.")
 
     st.subheader("Weitere Visualisierungen")
-    additional_plot = st.selectbox("Wählen Sie eine zusätzliche Visualisierung", ["Boxplot", "Scatterplot", "Violinplot", "Pairplot"])
+    additional_plot = st.selectbox("Wähle eine zusätzliche Visualisierung", ["Boxplot", "Scatterplot", "Violinplot", "Pairplot"])
     if additional_plot == "Boxplot":
         if numeric_columns:
-            col = st.selectbox("Wählen Sie eine numerische Spalte für den Boxplot", numeric_columns, key="boxplot")
+            col = st.selectbox("Wähle eine numerische Spalte für den Boxplot", numeric_columns, key="boxplot")
             fig, ax = plt.subplots()
             sns.boxplot(y=df[col], ax=ax)
             ax.set_title(f"Boxplot von {col}")
@@ -331,9 +335,9 @@ def descriptive_statistics():
             st.warning("Keine numerischen Spalten für Boxplot gefunden.")
     elif additional_plot == "Scatterplot":
         if len(numeric_columns) >= 2:
-            col_x = st.selectbox("Wählen Sie die X-Achse", numeric_columns, key="scatter_x")
+            col_x = st.selectbox("Wähle die X-Achse", numeric_columns, key="scatter_x")
             col_y_options = [col for col in numeric_columns if col != col_x]
-            col_y = st.selectbox("Wählen Sie die Y-Achse", col_y_options, key="scatter_y")
+            col_y = st.selectbox("Wähle die Y-Achse", col_y_options, key="scatter_y")
             fig, ax = plt.subplots()
             sns.scatterplot(data=df, x=col_x, y=col_y, ax=ax)
             ax.set_title(f"Scatterplot: {col_x} vs. {col_y}")
@@ -342,7 +346,7 @@ def descriptive_statistics():
             st.warning("Mindestens zwei numerische Spalten sind für einen Scatterplot erforderlich.")
     elif additional_plot == "Violinplot":
         if numeric_columns:
-            col = st.selectbox("Wählen Sie eine numerische Spalte für den Violinplot", numeric_columns, key="violinplot")
+            col = st.selectbox("Wähle eine numerische Spalte für den Violinplot", numeric_columns, key="violinplot")
             fig, ax = plt.subplots()
             sns.violinplot(y=df[col], ax=ax)
             ax.set_title(f"Violinplot von {col}")
@@ -365,7 +369,7 @@ def descriptive_statistics():
 def advanced_analyses():
     st.header("Statistische Analysen: t-Test, Korrelation, Chi², Regression, ANOVA")
     if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch.")
+        st.warning("Bitte lade zuerst einen Datensatz hoch.")
         return
     df = st.session_state["df"]
 
@@ -379,7 +383,7 @@ def advanced_analyses():
         st.write(f"**H₀:** {st.session_state['current_hypothesis']['null_hypothesis']}")
         st.write(f"**H₁:** {st.session_state['current_hypothesis']['alt_hypothesis']}")
     else:
-        st.warning("Keine gespeicherte Hypothese. Bitte definieren Sie eine Hypothese im Hypothesenmanager.")
+        st.warning("Keine gespeicherte Hypothese. Bitte definiere eine Hypothese im Hypothesenmanager.")
 
     # t-Test
     if analysis_type == "t-Test":
@@ -389,7 +393,6 @@ def advanced_analyses():
             **t-Test für unabhängige Stichproben**
 
             Der t-Test wird verwendet, um festzustellen, ob sich die Mittelwerte zweier Gruppen signifikant unterscheiden.
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/ttestabh.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -421,7 +424,6 @@ def advanced_analyses():
             **Pearson-Korrelation**
 
             Die Pearson-Korrelation misst die Stärke und Richtung eines linearen Zusammenhangs zwischen zwei numerischen Variablen.
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/korrelation.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -446,7 +448,6 @@ def advanced_analyses():
             **Chi²-Test für Unabhängigkeit**
 
             Der Chi²-Test prüft, ob ein Zusammenhang zwischen zwei kategorialen Variablen besteht.
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/pearsonzush.html
             """)
 
         categorical_columns = df.select_dtypes(exclude=np.number).columns.tolist()
@@ -475,99 +476,122 @@ def advanced_analyses():
     # Regression
     elif analysis_type == "Regression":
         st.subheader("Lineare Regression (OLS)")
-        if st.button("Erklärung zur Regression"):
-            st.info("""
-            **Lineare Regression**
 
-            Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren unabhängigen Variablen (X).
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/ereg.html und
-            https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/mreg.html
-            """)
+    if st.button("Erklärung zur Regression"):
+        st.info("""
+        **Lineare Regression**
 
-        numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
-        if not numeric_columns:
-            st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
+        Die lineare Regression modelliert den Zusammenhang zwischen einer Zielvariablen (Y) und einer oder mehreren unabhängigen Variablen (X).
+        Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/ereg.html und
+        https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/zusammenhaenge/mreg.html
+        """)
+
+    numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
+    if not numeric_columns:
+        st.warning("Ihr Datensatz benötigt mindestens eine numerische Spalte.")
+        return
+
+    target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
+    features_possible = [col for col in numeric_columns if col != target_col]
+    selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
+
+    if st.button("Trainiere Regressionsmodell"):
+        if not selected_features:
+            st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
             return
-        target_col = st.selectbox("Wählen Sie die Zielvariable (Y)", numeric_columns)
-        features_possible = [col for col in numeric_columns if col != target_col]
-        selected_features = st.multiselect("Wählen Sie eine/n oder mehrere Features (X)", features_possible)
-        if st.button("Trainiere Regressionsmodell"):
-            if not selected_features:
-                st.warning("Bitte wählen Sie mindestens eine Feature-Spalte aus.")
-                return
-            X = df[selected_features]
-            y = df[target_col]
-            data = pd.concat([X, y], axis=1).dropna()
-            X = data[selected_features]
-            y = data[target_col]
-            X_const = sm.add_constant(X)
-            model = sm.OLS(y, X_const).fit()
-            st.write("**Regressionszusammenfassung**")
-            st.text(model.summary())
 
-            st.subheader("Ergebnisse der Regression")
-            st.write(f"**R² (Bestimmtheitsmaß):** {model.rsquared:.4f}")
-            st.write(f"**Adj. R² (Angepasstes Bestimmtheitsmaß):** {model.rsquared_adj:.4f}")
-            st.write(f"**F-Statistik:** {model.fvalue:.4f}")
-            st.write(f"**p-Wert der F-Statistik:** {model.f_pvalue:.4e}")
+        X = df[selected_features]
+        y = df[target_col]
+        data = pd.concat([X, y], axis=1).dropna()
+        X = data[selected_features]
+        y = data[target_col]
 
-            st.write("**Deutung des p-Werts der F-Statistik:**")
-            if model.f_pvalue < 0.001:
-                st.info("Der p-Wert der F-Statistik ist sehr klein (p < 0.001), was darauf hinweist, dass das Modell insgesamt hochsignifikant ist.")
-            elif model.f_pvalue < 0.05:
-                st.info("Der p-Wert der F-Statistik ist signifikant (p < 0.05), was darauf hinweist, dass das Modell insgesamt statistisch signifikant ist.")
+        X_const = sm.add_constant(X)
+        model = sm.OLS(y, X_const).fit()
+
+        st.write("**Regressionszusammenfassung**")
+        st.text(model.summary())
+
+        st.session_state["regression_model"] = model
+        st.session_state["regression_features"] = selected_features
+        st.session_state["regression_target"] = target_col
+        st.session_state["regression_X_const"] = X_const
+
+        # Ergebnisse der Regression
+        st.subheader("Ergebnisse der Regression")
+        st.write(f"**R² (Bestimmtheitsmaß):** {model.rsquared:.4f}")
+        st.write(f"**Adj. R² (Angepasstes Bestimmtheitsmaß):** {model.rsquared_adj:.4f}")
+        st.write(f"**F-Statistik:** {model.fvalue:.4f}")
+        st.write(f"**p-Wert der F-Statistik:** {model.f_pvalue:.4e}")
+
+        # Dynamische Deutungen
+        st.subheader("Deutungen der Regressionsmetriken")
+
+        # Deutung von R²
+        if model.rsquared > 0.7:
+            st.write("Das Bestimmtheitsmaß (R²) ist hoch und zeigt, dass ein großer Anteil der Varianz der Zielvariable durch die unabhängigen Variablen erklärt wird.")
+        elif 0.4 <= model.rsquared <= 0.7:
+            st.write("Das Bestimmtheitsmaß (R²) ist moderat und deutet darauf hin, dass ein Teil der Varianz durch das Modell erklärt wird, es könnte jedoch verbessert werden.")
+        else:
+            st.write("Das Bestimmtheitsmaß (R²) ist niedrig. Das Modell erklärt nur einen kleinen Anteil der Varianz der Zielvariable. Dies könnte auf fehlende wichtige Prädiktoren oder eine schlechte Modellanpassung hinweisen.")
+
+        # Deutung von adjusted R²
+        if abs(model.rsquared - model.rsquared_adj) < 0.05:
+            st.write("Das angepasste Bestimmtheitsmaß (Adj. R²) liegt nahe am R², was darauf hindeutet, dass keine unnötigen Variablen im Modell enthalten sind.")
+        else:
+            st.write("Das angepasste Bestimmtheitsmaß (Adj. R²) ist deutlich niedriger als R², was darauf hindeuten könnte, dass einige Prädiktoren irrelevant sind.")
+
+        # Deutung des p-Werts der F-Statistik
+        if model.f_pvalue < 0.05:
+            st.write("Der p-Wert der F-Statistik ist signifikant (p < 0.05). Dies deutet darauf hin, dass das Modell insgesamt statistisch signifikant ist und die Prädiktoren relevant sind.")
+        else:
+            st.write("Der p-Wert der F-Statistik ist nicht signifikant (p >= 0.05). Dies deutet darauf hin, dass das Modell insgesamt möglicherweise nicht geeignet ist, die Zielvariable vorherzusagen.")
+
+        # Regressionslinie plotten (nur bei einer unabhängigen Variable)
+        if len(selected_features) == 1:
+            feature = selected_features[0]
+            fig, ax = plt.subplots()
+            ax.scatter(data[feature], y, alpha=0.5, label="Datenpunkte")
+            x_range = np.linspace(data[feature].min(), data[feature].max(), 100)
+            x_range_df = pd.DataFrame({feature: x_range})
+            x_range_df_const = sm.add_constant(x_range_df)
+            y_pred_line = model.predict(x_range_df_const)
+            ax.plot(x_range, y_pred_line, color="red", label="Regressionslinie")
+            ax.set_xlabel(feature)
+            ax.set_ylabel(target_col)
+            ax.legend()
+            st.pyplot(fig)
+
+        # Residualanalyse
+        st.subheader("Residualanalyse (Homoskedastizität)")
+        data["Vorhersage"] = model.predict(X_const)
+        data["Residuals"] = y - data["Vorhersage"]
+        fig_residuals, ax_residuals = plt.subplots()
+        ax_residuals.scatter(data["Vorhersage"], data["Residuals"], alpha=0.5)
+        ax_residuals.axhline(0, color="red", linestyle="--")
+        ax_residuals.set_xlabel("Vorhersagewerte")
+        ax_residuals.set_ylabel("Residuen")
+        ax_residuals.set_title("Residualplot: Vorhersagen vs. Residuen")
+        st.pyplot(fig_residuals)
+
+        # Interpretation der Ergebnisse
+        st.write("**Interpretation der Regressionsergebnisse**")
+        coef_table = pd.DataFrame({
+            "Variable": model.params.index,
+            "Koeffizient": model.params.values,
+            "p-Wert": model.pvalues.values,
+            "95% CI (Untergrenze)": model.conf_int()[0],
+            "95% CI (Obergrenze)": model.conf_int()[1]
+        })
+        st.dataframe(coef_table)
+
+        st.write("**Interpretation der Koeffizienten:**")
+        for i, row in coef_table.iterrows():
+            if row["Variable"] == "const":
+                st.write(f"Der konstante Term (Intercept) beträgt {row['Koeffizient']:.4f}.")
             else:
-                st.warning("Der p-Wert der F-Statistik ist nicht signifikant (p ≥ 0.05), was darauf hinweist, dass das Modell möglicherweise keine gute Erklärung für die Zielvariable liefert.")
+                st.write(f"Eine Einheitserhöhung in {row['Variable']} führt zu einer Änderung von {row['Koeffizient']:.4f} in der Zielvariable.")
 
-            st.write("**Deutung:**")
-            if model.rsquared > 0.7:
-                st.info("Das Modell erklärt einen hohen Anteil der Varianz in der Zielvariable.")
-            elif model.rsquared > 0.4:
-                st.info("Das Modell erklärt einen moderaten Anteil der Varianz in der Zielvariable.")
-            else:
-                st.info("Das Modell erklärt nur einen geringen Anteil der Varianz in der Zielvariable.")
-
-            st.subheader("Koeffizienten")
-            coef_table = pd.DataFrame({
-                "Variable": model.params.index,
-                "Koeffizient": model.params.values,
-                "p-Wert": model.pvalues.values,
-                "95% CI (Untergrenze)": model.conf_int()[0],
-                "95% CI (Obergrenze)": model.conf_int()[1]
-            })
-            st.dataframe(coef_table)
-
-            st.write("**Interpretation der Koeffizienten:**")
-            for i, row in coef_table.iterrows():
-                if row["Variable"] == "const":
-                    st.write(f"Der konstante Term (Intercept) beträgt {row['Koeffizient']:.4f}.")
-                else:
-                    st.write(f"Eine Einheitserhöhung in {row['Variable']} führt zu einer Änderung von {row['Koeffizient']:.4f} in der Zielvariable.")
-
-            if len(selected_features) == 1:
-                feature = selected_features[0]
-                fig, ax = plt.subplots()
-                ax.scatter(data[feature], y, alpha=0.5, label="Datenpunkte")
-                x_range = np.linspace(data[feature].min(), data[feature].max(), 100)
-                x_range_df = pd.DataFrame({feature: x_range})
-                x_range_df_const = sm.add_constant(x_range_df)
-                y_pred_line = model.predict(x_range_df_const)
-                ax.plot(x_range, y_pred_line, color="red", label="Regressionslinie")
-                ax.set_xlabel(feature)
-                ax.set_ylabel(target_col)
-                ax.legend()
-                st.pyplot(fig)
-
-            st.subheader("Residualanalyse(Homoskedastizität")
-            data["Vorhersage"] = model.predict(X_const)
-            data["Residuals"] = y - data["Vorhersage"]
-            fig_residuals, ax_residuals = plt.subplots()
-            ax_residuals.scatter(data["Vorhersage"], data["Residuals"], alpha=0.5)
-            ax_residuals.axhline(0, color="red", linestyle="--")
-            ax_residuals.set_xlabel("Vorhersagewerte")
-            ax_residuals.set_ylabel("Residuen")
-            ax_residuals.set_title("Residualplot: Vorhersagen vs. Residuen")
-            st.pyplot(fig_residuals)
 
     # ANOVA (Varianzanalyse)
     elif analysis_type == "ANOVA":
@@ -577,7 +601,6 @@ def advanced_analyses():
             **ANOVA (Analysis of Variance)**
 
             Die ANOVA wird verwendet, um festzustellen, ob es signifikante Unterschiede zwischen den Mittelwerten von mehr als zwei Gruppen gibt.
-            Weitere Informationen: https://www.methodenberatung.uzh.ch/de/datenanalyse_spss/unterschiede/zentral/mvarianz.html
             """)
 
         numeric_columns = df.select_dtypes(include=np.number).columns.tolist()
@@ -600,6 +623,7 @@ def advanced_analyses():
 #########################################
 # Funktion: Vorhersagen                 #
 #########################################
+
 def vorhersagen():
     st.header("Vorhersagen")
     st.info(
@@ -607,66 +631,42 @@ def vorhersagen():
         In diesem Bereich können Sie mit dem zuvor trainierten Regressionsmodell Vorhersagen für die Zielvariable treffen.
         """
     )
-
-    # Überprüfen, ob das Regressionsmodell verfügbar ist
     if "regression_model" not in st.session_state:
         st.warning("Bitte trainieren Sie zuerst ein Regressionsmodell unter 'Statistische Analysen'.")
         return
 
-    # Laden des Modells und der relevanten Metadaten aus dem Session State
     model = st.session_state["regression_model"]
     features = st.session_state["regression_features"]
     target_col = st.session_state["regression_target"]
     df = st.session_state["df"]
-
-    # Erstellung der Eingabemaske für die Vorhersagedaten
+    
     input_data = {}
     for feature in features:
-        col_min = float(df[feature].min())  # Minimum des Features
-        col_max = float(df[feature].max())  # Maximum des Features
-        default_val = float(df[feature].mean())  # Standardwert (Mittelwert)
-        
+        col_min = float(df[feature].min())
+        col_max = float(df[feature].max())
+        default_val = float(df[feature].mean())
         input_data[feature] = st.number_input(
             f"Wert für {feature} (Bereich: {col_min} bis {col_max})",
             value=default_val,
             min_value=col_min,
             max_value=col_max
         )
-
-    # Eingabedaten als DataFrame erstellen
+    
     input_df = pd.DataFrame([input_data])
-    st.write("Eingegebene Daten:", input_df)
-
+    
     # Sicherstellen, dass der konstante Term korrekt hinzugefügt wird
     input_df_const = sm.add_constant(input_df, has_constant='add')
-
-    # Überprüfen auf fehlende Spalten und deren Behandlung
+    
+    # Überprüfen, ob die Spalten übereinstimmen
     missing_cols = set(model.model.exog_names) - set(input_df_const.columns)
-    if missing_cols:
-        st.warning(f"Fehlende Spalten in den Eingabedaten: {missing_cols}. Diese werden mit 0 aufgefüllt.")
-        for col in missing_cols:
-            input_df_const[col] = 0  # Fehlende Spalten mit 0 initialisieren
-
-    # Reihenfolge der Spalten sicherstellen
-    try:
-        input_df_const = input_df_const[model.model.exog_names]
-    except KeyError as e:
-        st.error(f"Fehler beim Abgleich der Spaltenreihenfolge: {e}")
-        st.stop()
-
-    # Vorhersage durchführen
-    try:
-        prediction = model.predict(input_df_const)
-        st.success(f"Vorhergesagter Wert für {target_col}: {prediction[0]:.4f}")
-    except Exception as e:
-        st.error(f"Fehler bei der Berechnung der Vorhersage: {e}")
-
-    # Debugging-Informationen anzeigen
-    st.subheader("Debugging-Informationen")
-    st.write("Modell: ", model)
-    st.write("Features: ", features)
-    st.write("Eingabedaten (nach Anpassung):", input_df_const)
-    st.write("Modell-Spalten (exog_names):", model.model.exog_names)
+    for col in missing_cols:
+        input_df_const[col] = 0  # Fehlende Spalten mit 0 auffüllen
+    
+    # Reihenfolge der Spalten anpassen
+    input_df_const = input_df_const[model.model.exog_names]
+    
+    prediction = model.predict(input_df_const)
+    st.write(f"Vorhergesagter Wert für {target_col}: {prediction[0]:.4f}")
 
 
 ######################################################################################
@@ -674,7 +674,7 @@ def pdf_bericht():
     st.header("PDF Bericht")
     st.info(
         """
-        Wählen Sie die Inhalte aus, die in den PDF-Bericht aufgenommen werden sollen:
+        Wähle die Inhalte aus, die in den PDF-Bericht aufgenommen werden sollen:
         - Deskriptive Statistiken
         - Korrelationsmatrix
         - Diagramme (z. B. Histogramme, Boxplots)
@@ -772,7 +772,7 @@ def hypothesen_manager():
 
     # Prüfen, ob ein Datensatz vorhanden ist
     if "df" not in st.session_state:
-        st.warning("Bitte laden Sie zuerst einen Datensatz hoch, bevor Sie Hypothesen definieren.")
+        st.warning("Bitte lade zuerst einen Datensatz hoch, bevor du Hypothesen definierst.")
         return
 
     # Datensatz laden und Spalten identifizieren
@@ -795,8 +795,8 @@ def hypothesen_manager():
     st.subheader("Hypothesenformulierung")
     if hypothesis_type == "t-Test":
         if numeric_columns and categorical_columns:
-            selected_numeric = st.selectbox("Wählen Sie eine numerische Variable", numeric_columns, key="ttest_numeric")
-            selected_category = st.selectbox("Wählen Sie eine kategoriale Variable", categorical_columns, key="ttest_category")
+            selected_numeric = st.selectbox("Wähle eine numerische Variable", numeric_columns, key="ttest_numeric")
+            selected_category = st.selectbox("Wähle eine kategoriale Variable", categorical_columns, key="ttest_category")
             groups = df[selected_category].unique()
             if len(groups) != 2:
                 st.warning("Für einen t-Test müssen genau zwei Gruppen vorhanden sein.")
@@ -817,8 +817,8 @@ def hypothesen_manager():
 
     elif hypothesis_type == "Korrelation":
         if len(numeric_columns) >= 2:
-            col_x = st.selectbox("Wählen Sie die erste numerische Variable", numeric_columns, key="corr_x")
-            col_y = st.selectbox("Wählen Sie die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="corr_y")
+            col_x = st.selectbox("Wähle die erste numerische Variable", numeric_columns, key="corr_x")
+            col_y = st.selectbox("Wähle die zweite numerische Variable", [col for col in numeric_columns if col != col_x], key="corr_y")
             st.markdown(f"**Automatisch generierte Hypothesen:**")
             st.write(f"**H₀:** Es besteht keine lineare Korrelation zwischen '{col_x}' und '{col_y}'.")
             st.write(f"**H₁:** Es besteht eine lineare Korrelation zwischen '{col_x}' und '{col_y}'.")
@@ -834,8 +834,8 @@ def hypothesen_manager():
 
     elif hypothesis_type == "Chi²-Test":
         if len(categorical_columns) >= 2:
-            col_x = st.selectbox("Wählen Sie die erste kategoriale Variable", categorical_columns, key="chi2_x")
-            col_y = st.selectbox("Wählen Sie die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="chi2_y")
+            col_x = st.selectbox("Wähle die erste kategoriale Variable", categorical_columns, key="chi2_x")
+            col_y = st.selectbox("Wähle die zweite kategoriale Variable", [col for col in categorical_columns if col != col_x], key="chi2_y")
             st.markdown(f"**Automatisch generierte Hypothesen:**")
             st.write(f"**H₀:** Es besteht keine Abhängigkeit zwischen '{col_x}' und '{col_y}'.")
             st.write(f"**H₁:** Es besteht eine Abhängigkeit zwischen '{col_x}' und '{col_y}'.")
@@ -853,7 +853,7 @@ def hypothesen_manager():
         if len(numeric_columns) >= 2:
             target_col = st.selectbox("Wähle die Zielvariable (Y)", numeric_columns, key="regression_y")
             features_possible = [col for col in numeric_columns if col != target_col]
-            selected_features = st.multiselect("Wählen Sie unabhängige Variablen (X)", features_possible, key="regression_x")
+            selected_features = st.multiselect("Wähle unabhängige Variablen (X)", features_possible, key="regression_x")
 
             if selected_features:
                 st.markdown(f"**Automatisch generierte Hypothesen:**")
@@ -874,7 +874,7 @@ def hypothesen_manager():
     # Hypothese validieren
     st.markdown("---")
     st.subheader("Hypothese validieren")
-    st.info("Klicken Sie auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
+    st.info("Klicke auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
 
     if st.button("Hypothese testen"):
         if "current_hypothesis" in st.session_state:
