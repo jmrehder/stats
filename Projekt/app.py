@@ -562,7 +562,7 @@ else:
 
 
         # Deutung des p-Werts der F-Statistik
-        if model.f_pvalue < 0.05:
+    if model.f_pvalue < 0.05:
             st.write("Der p-Wert der F-Statistik ist signifikant (p < 0.05). Dies deutet darauf hin, dass das Modell insgesamt statistisch signifikant ist und die Prädiktoren relevant sind.")
         else:
             st.write("Der p-Wert der F-Statistik ist nicht signifikant (p >= 0.05). Dies deutet darauf hin, dass das Modell insgesamt möglicherweise nicht geeignet ist, die Zielvariable vorherzusagen.")
