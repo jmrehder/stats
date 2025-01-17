@@ -528,18 +528,38 @@ def advanced_analyses():
         st.subheader("Deutungen der Regressionsmetriken")
 
         # Deutung von R²
-        if model.rsquared > 0.7:
-            st.write("Das Bestimmtheitsmaß (R²) ist hoch und zeigt, dass ein großer Anteil der Varianz der Zielvariable durch die unabhängigen Variablen erklärt wird.")
-        elif 0.4 <= model.rsquared <= 0.7:
-            st.write("Das Bestimmtheitsmaß (R²) ist moderat und deutet darauf hin, dass ein Teil der Varianz durch das Modell erklärt wird, es könnte jedoch verbessert werden.")
-        else:
-            st.write("Das Bestimmtheitsmaß (R²) ist niedrig. Das Modell erklärt nur einen kleinen Anteil der Varianz der Zielvariable. Dies könnte auf fehlende wichtige Prädiktoren oder eine schlechte Modellanpassung hinweisen.")
+        # Deutung von R²
+if model.rsquared > 0.7:
+    st.write("""
+    Das Bestimmtheitsmaß (R²) ist hoch und zeigt, dass ein großer Anteil der Varianz der Zielvariable durch die unabhängigen Variablen erklärt wird.
+    Das Modell scheint gut angepasst zu sein. Überprüfen Sie dennoch die Residualanalyse, um sicherzustellen, dass die Annahmen der Regression erfüllt sind.
+    """)
+elif 0.4 <= model.rsquared <= 0.7:
+    st.write("""
+    Das Bestimmtheitsmaß (R²) ist moderat. Es deutet darauf hin, dass ein Teil der Varianz durch das Modell erklärt wird, aber noch Verbesserungspotenzial besteht.
+    Prüfen Sie, ob zusätzliche wichtige Prädiktoren im Datensatz fehlen, oder ob die Modellannahmen verletzt werden.
+    """)
+else:
+    st.write("""
+    Das Bestimmtheitsmaß (R²) ist niedrig. Das Modell erklärt nur einen kleinen Anteil der Varianz der Zielvariable.
+    Dies könnte auf fehlende wichtige Prädiktoren, eine schlechte Modellanpassung oder eine nichtlineare Beziehung hindeuten.
+    Ziehen Sie alternative Modellierungsansätze in Betracht (z. B. nichtlineare Modelle).
+    """)
 
-        # Deutung von adjusted R²
-        if abs(model.rsquared - model.rsquared_adj) < 0.05:
-            st.write("Das angepasste Bestimmtheitsmaß (Adj. R²) liegt nahe am R², was darauf hindeutet, dass keine unnötigen Variablen im Modell enthalten sind.")
-        else:
-            st.write("Das angepasste Bestimmtheitsmaß (Adj. R²) ist deutlich niedriger als R², was darauf hindeuten könnte, dass einige Prädiktoren irrelevant sind.")
+# Deutung von adjusted R²
+if abs(model.rsquared - model.rsquared_adj) < 0.05:
+    st.write("""
+    Das angepasste Bestimmtheitsmaß (Adj. R²) liegt nahe am R². Dies deutet darauf hin, dass keine oder nur wenige irrelevante Variablen im Modell enthalten sind.
+    Das Modell scheint effizient zu sein, und die Prädiktoren tragen sinnvoll zur Erklärung der Zielvariable bei.
+    """)
+else:
+    st.write("""
+    Das angepasste Bestimmtheitsmaß (Adj. R²) ist deutlich niedriger als R².
+    Dies könnte darauf hindeuten, dass einige Prädiktoren keinen signifikanten Beitrag leisten.
+    Betrachten Sie die Koeffizienten und p-Werte der Prädiktoren, um irrelevante Variablen zu identifizieren.
+    Verwenden Sie Feature-Selektionstechniken wie Forward Selection oder Regularisierung (z. B. Lasso-Regression), um das Modell zu verbessern.
+    """)
+
 
         # Deutung des p-Werts der F-Statistik
         if model.f_pvalue < 0.05:
