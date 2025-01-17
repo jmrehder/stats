@@ -558,7 +558,7 @@ def advanced_analyses():
                 ax.legend()
                 st.pyplot(fig)
 
-            st.subheader("Residualanalyse")
+            st.subheader("Residualanalyse(Homoskedastizität")
             data["Vorhersage"] = model.predict(X_const)
             data["Residuals"] = y - data["Vorhersage"]
             fig_residuals, ax_residuals = plt.subplots()
