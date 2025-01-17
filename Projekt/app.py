@@ -871,16 +871,7 @@ def hypothesen_manager():
             else:
                 st.warning("Bitte wählen Sie mindestens eine unabhängige Variable aus.")
 
-    # Hypothese validieren
-    st.markdown("---")
-    st.subheader("Hypothese validieren")
-    st.info("Klicke auf den Button unten, um die Hypothese zu testen und die Ergebnisse anzuzeigen.")
-
-    if st.button("Hypothese testen"):
-        if "current_hypothesis" in st.session_state:
-            st.write(f"**Aktuelle Hypothese:**\nH₀: {st.session_state['current_hypothesis']['null_hypothesis']}\nH₁: {st.session_state['current_hypothesis']['alt_hypothesis']}")
-        else:
-            st.warning("Keine Hypothese gespeichert.")
+    
 
 
 #########################################
